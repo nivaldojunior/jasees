@@ -4,10 +4,11 @@ import br.com.jasees.domain.Election;
 import br.com.jasees.domain.User;
 import br.com.jasees.repository.ElectionRepository;
 import br.com.jasees.repository.UserRepository;
-import br.com.jasees.security.SecurityUtils;
 import br.com.jasees.web.rest.vm.VoteVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -60,16 +61,16 @@ public class ElectionService {
         return result;
     }
 
-    public List<Election> getElectionsStarted() {
-        return electionRepository.findAllByInitDateBeforeAndEndDateAfter(ZonedDateTime.now(), ZonedDateTime.now());
-    }
-
-    public List<Election> getElectionsFinished() {
-        return electionRepository.findAllByEndDateBefore(ZonedDateTime.now());
-    }
-
-    public List<Election> getElectionsNotStarted() {
-        return electionRepository.findAllByInitDateAfter(ZonedDateTime.now());
+    public Page<Election> getElections(Pageable pageable, String filter) {
+        if (filter.equals("finished")) {
+            return electionRepository.findAllByEndDateBefore(pageable, ZonedDateTime.now());
+        } else if (filter.equals("inprogress")) {
+            return electionRepository.findAllByInitDateBeforeAndEndDateAfter(pageable, ZonedDateTime.now(), ZonedDateTime.now());
+        } else if (filter.equals("notstarted")) {
+            return electionRepository.findAllByInitDateAfter(pageable, ZonedDateTime.now());
+        } else {
+            return electionRepository.findAll(pageable);
+        }
     }
 
 }

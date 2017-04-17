@@ -106,9 +106,13 @@ public class ElectionResource {
      */
     @GetMapping("/elections")
     @Timed
-    public ResponseEntity<List<Election>> getAllElections(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<Election>> getAllElections(
+        @RequestParam(value = "filter", required = false, defaultValue = "none") String filter,
+        @ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Elections");
-        Page<Election> page = electionRepository.findAll(pageable);
+
+        Page<Election> page = electionService.getElections(pageable, filter);
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/elections");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
