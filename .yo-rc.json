@@ -20,7 +20,7 @@
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "rememberMeKey": "457d9229a6e01d66ead0c7bb4f26cd1b7b41a7db",
+    "rememberMeKey": "0b938e725e81e605bcfdf7648fdf374fbf474f4f",
     "clientFramework": "angular2",
     "useSass": true,
     "clientPackageManager": "yarn",
