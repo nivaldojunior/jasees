@@ -1,0 +1,46 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength"
+            ],
+            "fieldValidateRulesMinlength": "3",
+            "fieldValidateRulesMaxlength": "50"
+        },
+        {
+            "fieldName": "desc",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength",
+                "maxlength"
+            ],
+            "fieldValidateRulesMinlength": "20",
+            "fieldValidateRulesMaxlength": "500"
+        },
+        {
+            "fieldName": "initDate",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "ZonedDateTime",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "election",
+    "pagination": "pagination"
+}
