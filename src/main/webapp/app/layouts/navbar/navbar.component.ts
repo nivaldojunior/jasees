@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
 
-        this.profileService.getProfileInfo().subscribe(profileInfo => {
+        this.profileService.getProfileInfo().subscribe((profileInfo) => {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });

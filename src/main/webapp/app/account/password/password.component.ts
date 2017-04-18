@@ -21,13 +21,13 @@ export class PasswordComponent implements OnInit {
     ) {
         }
 
-    ngOnInit () {
+    ngOnInit() {
         this.principal.identity().then((account) => {
             this.account = account;
         });
     }
 
-    changePassword () {
+    changePassword() {
         if (this.password !== this.confirmPassword) {
             this.error = null;
             this.success = null;

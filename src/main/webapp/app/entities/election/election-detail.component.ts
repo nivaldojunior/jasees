@@ -24,14 +24,14 @@ export class ElectionDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscription = this.route.params.subscribe(params => {
+        this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
         this.registerChangeInElections();
     }
 
-    load (id) {
-        this.electionService.find(id).subscribe(election => {
+    load(id) {
+        this.electionService.find(id).subscribe((election) => {
             this.election = election;
         });
     }
@@ -45,7 +45,6 @@ export class ElectionDetailComponent implements OnInit, OnDestroy {
     }
 
     registerChangeInElections() {
-        this.eventSubscriber = this.eventManager.subscribe('electionListModification', response => this.load(this.election.id));
+        this.eventSubscriber = this.eventManager.subscribe('electionListModification', (response) => this.load(this.election.id));
     }
-
 }

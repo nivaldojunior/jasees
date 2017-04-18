@@ -23,12 +23,12 @@ export class ElectionDeleteDialogComponent {
     ) {
     }
 
-    clear () {
+    clear() {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmDelete (id: number) {
-        this.electionService.delete(id).subscribe(response => {
+    confirmDelete(id: number) {
+        this.electionService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'electionListModification',
                 content: 'Deleted an election'
@@ -47,13 +47,13 @@ export class ElectionDeletePopupComponent implements OnInit, OnDestroy {
     modalRef: NgbModalRef;
     routeSub: any;
 
-    constructor (
+    constructor(
         private route: ActivatedRoute,
         private electionPopupService: ElectionPopupService
     ) {}
 
     ngOnInit() {
-        this.routeSub = this.route.params.subscribe(params => {
+        this.routeSub = this.route.params.subscribe((params) => {
             this.modalRef = this.electionPopupService
                 .open(ElectionDeleteDialogComponent, params['id']);
         });
