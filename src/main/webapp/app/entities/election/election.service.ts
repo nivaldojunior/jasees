@@ -12,7 +12,7 @@ export class ElectionService {
     constructor(private http: Http, private dateUtils: DateUtils) { }
 
     create(election: Election): Observable<Election> {
-        let copy: Election = Object.assign({}, election);
+        const copy: Election = Object.assign({}, election);
         copy.initDate = this.dateUtils.toDate(election.initDate);
         copy.endDate = this.dateUtils.toDate(election.endDate);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
@@ -21,7 +21,7 @@ export class ElectionService {
     }
 
     update(election: Election): Observable<Election> {
-        let copy: Election = Object.assign({}, election);
+        const copy: Election = Object.assign({}, election);
 
         copy.initDate = this.dateUtils.toDate(election.initDate);
 
@@ -33,7 +33,7 @@ export class ElectionService {
 
     find(id: number): Observable<Election> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            let jsonResponse = res.json();
+            const jsonResponse = res.json();
             jsonResponse.initDate = this.dateUtils
                 .convertDateTimeFromServer(jsonResponse.initDate);
             jsonResponse.endDate = this.dateUtils
@@ -43,7 +43,7 @@ export class ElectionService {
     }
 
     query(req?: any): Observable<Response> {
-        let options = this.createRequestOption(req);
+        const options = this.createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
             .map((res: any) => this.convertResponse(res))
         ;
@@ -53,9 +53,8 @@ export class ElectionService {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
-
     private convertResponse(res: any): any {
-        let jsonResponse = res.json();
+        const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {
             jsonResponse[i].initDate = this.dateUtils
                 .convertDateTimeFromServer(jsonResponse[i].initDate);
@@ -67,9 +66,9 @@ export class ElectionService {
     }
 
     private createRequestOption(req?: any): BaseRequestOptions {
-        let options: BaseRequestOptions = new BaseRequestOptions();
+        const options: BaseRequestOptions = new BaseRequestOptions();
         if (req) {
-            let params: URLSearchParams = new URLSearchParams();
+            const params: URLSearchParams = new URLSearchParams();
             params.set('page', req.page);
             params.set('size', req.size);
             if (req.sort) {

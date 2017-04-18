@@ -7,7 +7,7 @@ import { ElectionService } from './election.service';
 @Injectable()
 export class ElectionPopupService {
     private isOpen = false;
-    constructor (
+    constructor(
         private datePipe: DatePipe,
         private modalService: NgbModal,
         private router: Router,
@@ -15,14 +15,14 @@ export class ElectionPopupService {
 
     ) {}
 
-    open (component: Component, id?: number | any): NgbModalRef {
+    open(component: Component, id?: number | any): NgbModalRef {
         if (this.isOpen) {
             return;
         }
         this.isOpen = true;
 
         if (id) {
-            this.electionService.find(id).subscribe(election => {
+            this.electionService.find(id).subscribe((election) => {
                 election.initDate = this.datePipe
                     .transform(election.initDate, 'yyyy-MM-ddThh:mm');
                 election.endDate = this.datePipe
@@ -35,9 +35,9 @@ export class ElectionPopupService {
     }
 
     electionModalRef(component: Component, election: Election): NgbModalRef {
-        let modalRef = this.modalService.open(component, { size: 'lg', backdrop: 'static'});
+        const modalRef = this.modalService.open(component, { size: 'lg', backdrop: 'static'});
         modalRef.componentInstance.election = election;
-        modalRef.result.then(result => {
+        modalRef.result.then((result) => {
             this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true });
             this.isOpen = false;
         }, (reason) => {

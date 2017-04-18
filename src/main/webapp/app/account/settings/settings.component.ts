@@ -18,13 +18,13 @@ export class SettingsComponent implements OnInit {
     ) {
         }
 
-    ngOnInit () {
+    ngOnInit() {
         this.principal.identity().then((account) => {
             this.settingsAccount = this.copyAccount(account);
         });
     }
 
-    save () {
+    save() {
         this.account.save(this.settingsAccount).subscribe(() => {
             this.error = null;
             this.success = 'OK';
@@ -37,7 +37,7 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    copyAccount (account) {
+    copyAccount(account) {
         return {
             activated: account.activated,
             email: account.email,

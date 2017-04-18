@@ -2,7 +2,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { JaseesSharedModule } from '../../shared';
-
 import {
     ElectionService,
     ElectionPopupService,
@@ -17,7 +16,7 @@ import {
     ElectionResolvePagingParams,
 } from './';
 
-let ENTITY_STATES = [
+const ENTITY_STATES = [
     ...electionRoute,
     ...electionPopupRoute,
 ];
