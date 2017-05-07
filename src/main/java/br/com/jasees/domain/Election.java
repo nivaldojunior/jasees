@@ -44,13 +44,13 @@ public class Election extends AbstractAuditingEntity implements Serializable {
     private ZonedDateTime endDate;
 
     @NotNull
-    @Size(min=2)
+    @Size(min = 2)
     @Field("cand_list")
     private Set<String> candList;
 
     @JsonIgnore
     @Field("voted_list")
-    private Set<String> votedList;
+    private Map<String, Integer> votedList;
 
     @JsonIgnore
     @Field("prime_list")
@@ -65,7 +65,7 @@ public class Election extends AbstractAuditingEntity implements Serializable {
     private Map<String, BigInteger> resultList;
 
     public void init() {
-        votedList = new HashSet<>();
+        votedList = new HashMap<>();
         primeList = new HashSet<>();
         voteError = new HashMap<>();
         resultList = new HashMap<>();
@@ -123,8 +123,8 @@ public class Election extends AbstractAuditingEntity implements Serializable {
         this.candList = candList;
     }
 
-    public Boolean ifVoted(String user) {
-        return votedList.contains(user);
+    public Integer ifVoted(String user) {
+        return !votedList.containsKey(user) ? 0 : votedList.get(user);
     }
 
     private BigInteger generatePrimeNumber() {
@@ -139,21 +139,20 @@ public class Election extends AbstractAuditingEntity implements Serializable {
     }
 
     public BigInteger vote(String cand, String user, Boolean bias) {
-
         BigInteger result = generatePrimeNumber();
         BigInteger get = resultList.get(cand);
         Integer beforeLength = get.bitLength();
         Integer bitLength = Constants.PRIME_NUMBER_BIT_LENGTH;
         resultList.put(cand, get.multiply(result));
-        votedList.add(user);
-
         Integer error = voteError.get(cand);
         if (resultList.get(cand).bitLength() != beforeLength + bitLength) {
             voteError.put(cand, ++error);
         }
-
         if (!bias) {
             voteError.put(cand, (error - bitLength));
+            votedList.put(user, 2);
+        }else{
+            votedList.put(user, 1);
         }
         return result;
     }

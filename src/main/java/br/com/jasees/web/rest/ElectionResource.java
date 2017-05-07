@@ -128,7 +128,8 @@ public class ElectionResource {
     public ResponseEntity<Election> getElection(@PathVariable String id) {
         log.debug("REST request to get Election : {}", id);
         Election election = electionRepository.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(election));
+        HttpHeaders headers = HeaderUtil.createAlert("Status user in election", electionService.ifVoted(election).toString());
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(election), headers);
     }
 
     /**
@@ -167,9 +168,13 @@ public class ElectionResource {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "candidateinvalid", "Candidate invalid"))
                 .body(null);
-        } else if (election.get().ifVoted(user.get().getId()) && voteVM.getBias()) {
+        } else if (election.get().ifVoted(user.get().getId()) == 1 && voteVM.getBias()) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "alreadyvoted", "User already voted"))
+                .body(null);
+        } else if (election.get().ifVoted(user.get().getId()) == 2 && !voteVM.getBias()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "alreadyfalsevoted", "User already false voted"))
                 .body(null);
         } else if (election.get().getInitDate().isAfter(ZonedDateTime.now())) {
             return ResponseEntity.badRequest()
@@ -186,7 +191,7 @@ public class ElectionResource {
 
     @GetMapping("/elections/{id}/verifyVote")
     @Timed
-    public ResponseEntity<User> verifyVote(@PathVariable String id, @RequestBody String pNumber) {
+    public ResponseEntity<User> verifyVote(@PathVariable String id, @RequestParam String pNumber) {
         log.debug("REST request to verify vote in Election : {}", id);
 
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());

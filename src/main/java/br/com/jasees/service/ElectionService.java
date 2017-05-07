@@ -4,6 +4,7 @@ import br.com.jasees.domain.Election;
 import br.com.jasees.domain.User;
 import br.com.jasees.repository.ElectionRepository;
 import br.com.jasees.repository.UserRepository;
+import br.com.jasees.security.SecurityUtils;
 import br.com.jasees.web.rest.vm.VoteVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +72,11 @@ public class ElectionService {
         } else {
             return electionRepository.findAll(pageable);
         }
+    }
+
+    public Integer ifVoted(Election election) {
+        Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        return !user.isPresent() ? 0 : election.ifVoted(user.get().getId());
     }
 
 }
