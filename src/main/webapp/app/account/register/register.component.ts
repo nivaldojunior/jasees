@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private elementRef: ElementRef,
         private renderer: Renderer
     ) {
-        }
+    }
 
     ngOnInit() {
         this.success = false;

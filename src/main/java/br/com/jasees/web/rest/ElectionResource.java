@@ -122,7 +122,7 @@ public class ElectionResource {
     public ResponseEntity<Void> deleteElection(@PathVariable String id) {
         log.debug("REST request to delete Election : {}", id);
         electionRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
     }
 
 }

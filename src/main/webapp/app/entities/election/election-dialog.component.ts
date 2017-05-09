@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
+import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager, AlertService } from 'ng-jhipster';
 
@@ -18,6 +19,7 @@ export class ElectionDialogComponent implements OnInit {
     election: Election;
     authorities: any[];
     isSaving: boolean;
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
@@ -37,14 +39,17 @@ export class ElectionDialogComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.election.id !== undefined) {
-            this.electionService.update(this.election)
-                .subscribe((res: Election) =>
-                    this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+            this.subscribeToSaveResponse(
+                this.electionService.update(this.election));
         } else {
-            this.electionService.create(this.election)
-                .subscribe((res: Election) =>
-                    this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+            this.subscribeToSaveResponse(
+                this.electionService.create(this.election));
         }
+    }
+
+    private subscribeToSaveResponse(result: Observable<Election>) {
+        result.subscribe((res: Election) =>
+            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
     private onSaveSuccess(result: Election) {

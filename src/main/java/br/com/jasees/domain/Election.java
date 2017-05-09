@@ -108,25 +108,25 @@ public class Election implements Serializable {
             return false;
         }
         Election election = (Election) o;
-        if (election.id == null || id == null) {
+        if (election.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(id, election.id);
+        return Objects.equals(getId(), election.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Election{" +
-            "id=" + id +
-            ", name='" + name + "'" +
-            ", desc='" + desc + "'" +
-            ", initDate='" + initDate + "'" +
-            ", endDate='" + endDate + "'" +
-            '}';
+            "id=" + getId() +
+            ", name='" + getName() + "'" +
+            ", desc='" + getDesc() + "'" +
+            ", initDate='" + getInitDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
+            "}";
     }
 }

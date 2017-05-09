@@ -17,7 +17,7 @@ export class PasswordResetInitComponent implements OnInit, AfterViewInit {
         private elementRef: ElementRef,
         private renderer: Renderer
     ) {
-        }
+    }
 
     ngOnInit() {
         this.resetAccount = {};

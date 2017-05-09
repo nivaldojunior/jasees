@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { EventManager   } from 'ng-jhipster';
+import { EventManager  } from 'ng-jhipster';
 
 import { Election } from './election.model';
 import { ElectionService } from './election.service';
@@ -13,7 +13,7 @@ import { ElectionService } from './election.service';
 export class ElectionDetailComponent implements OnInit, OnDestroy {
 
     election: Election;
-    private subscription: any;
+    private subscription: Subscription;
     private eventSubscriber: Subscription;
 
     constructor(
@@ -45,6 +45,9 @@ export class ElectionDetailComponent implements OnInit, OnDestroy {
     }
 
     registerChangeInElections() {
-        this.eventSubscriber = this.eventManager.subscribe('electionListModification', (response) => this.load(this.election.id));
+        this.eventSubscriber = this.eventManager.subscribe(
+            'electionListModification',
+            (response) => this.load(this.election.id)
+        );
     }
 }

@@ -16,7 +16,7 @@ export class SettingsComponent implements OnInit {
         private account: AccountService,
         private principal: Principal
     ) {
-        }
+    }
 
     ngOnInit() {
         this.principal.identity().then((account) => {

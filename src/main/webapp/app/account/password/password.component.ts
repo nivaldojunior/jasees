@@ -19,7 +19,7 @@ export class PasswordComponent implements OnInit {
         private passwordService: Password,
         private principal: Principal
     ) {
-        }
+    }
 
     ngOnInit() {
         this.principal.identity().then((account) => {

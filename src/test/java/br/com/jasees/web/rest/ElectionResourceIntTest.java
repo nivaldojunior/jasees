@@ -309,5 +309,14 @@ public class ElectionResourceIntTest {
     @Test
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Election.class);
+        Election election1 = new Election();
+        election1.setId("id1");
+        Election election2 = new Election();
+        election2.setId(election1.getId());
+        assertThat(election1).isEqualTo(election2);
+        election2.setId("id2");
+        assertThat(election1).isNotEqualTo(election2);
+        election1.setId(null);
+        assertThat(election1).isNotEqualTo(election2);
     }
 }
