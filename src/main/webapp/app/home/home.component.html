@@ -1,42 +1,80 @@
 <div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid img-rounded"></span>
+
+    <div class="col-md-12">
+        <h1 class="display-4">Elections</h1>
     </div>
-    <div class="col-md-9">
-        <h1 class="display-4">Welcome, Java Hipster!</h1>
-        <p class="lead">This is your homepage</p>
 
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
-                <span *ngIf="account"
-                   > You are logged in as user "{{account.login}}". </span>
+    <div class="container col-md-8">
+        <div class="card" *ngFor="let election of elections">
+          <div class="card-header">
+            <div class="card-name">
+                {{election.name}}
             </div>
-
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>If you want to </span>
-                <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
-
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>You don't have an account yet?</span>
-                <a class="alert-link" routerLink="register">Register a new account</a>
-            </div>
+          </div>
+          <div class="card-block" >
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-desc">
+                            {{election.desc}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" *ngIf="calculeTime(election)">
+                        <div class="card-type">Election Start For:</div>
+                    </div>
+                </div>
+                <div class="row row-time">
+                    <div class="col-md-2">
+                        
+                    </div>
+                    <div class="col-md-2 color-time">
+                        <div class="card-time">368</div> days
+                    </div>
+                    <div class="col-md-2 color-time">
+                        <div class="card-time">1</div> hour
+                    </div>
+                    <div class="col-md-2 color-time">
+                        <div class="card-time">35</div> minutes
+                    </div>
+                    <div class="col-md-2 color-time">
+                        <div class="card-time">29</div> seconds
+                    </div>
+                </div>
+          </div>
         </div>
-
-        <p>
-            If you have any question on JHipster:
-        </p>
-
-        <ul>
-            <li><a href="http://jhipster.github.io/" target="_blank">JHipster homepage</a></li>
-            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank">JHipster on Stack Overflow</a></li>
-            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank">JHipster bug tracker</a></li>
-            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/java_hipster" target="_blank" >follow @java_hipster on Twitter</a></li>
-        </ul>
-
-        <p>
-            <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank">Github</a>!
-        </p>
     </div>
+
 </div>
+
+<style type="text/css">
+    .display-4{
+        text-align: center;
+    }
+    .card {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .card-name {
+        font-size: 30px;
+        font-weight: 600;
+    }
+    .card-desc {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    .card-type {
+        margin: 0 auto;
+        font-weight: 500;
+        font-size: 30px;
+        margin-top: 30px;
+    }
+    .color-time {
+        background: #DC143C;
+        color: white;
+        font-weight: 900;
+    }
+    .card-time {
+        font-size: 30px;
+    }
+</style>
