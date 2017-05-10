@@ -5,40 +5,48 @@
     </div>
 
     <div class="container col-md-8">
-        <div class="card" *ngFor="let election of elections">
+        <div class="card" *ngFor="let item of elections">
           <div class="card-header">
             <div class="card-name">
-                {{election.name}}
+                {{item.name}}
             </div>
           </div>
           <div class="card-block" >
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-desc">
-                            {{election.desc}}
+                            {{item.desc}}
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12" *ngIf="calculeTime(election)">
-                        <div class="card-type">Election Start For:</div>
+                    <div class="col-md-12" *ngIf="item.type === 'NOT_STARTED' ">
+                        <div class="card-type">Election Start in:</div>
+                    </div>
+
+                    <div class="col-md-12" *ngIf="item.type === 'INITIATED' ">
+                        <div class="card-type">Election ends in:</div>
+                    </div>
+
+                    <div class="col-md-12" *ngIf="item.type === 'FINALIZED' ">
+                        <div class="card-type">Election finalized:</div>
                     </div>
                 </div>
-                <div class="row row-time">
+                <div class="row row-time" *ngIf="item.type === 'NOT_STARTED' || item.type === 'INITIATED' ">
                     <div class="col-md-2">
                         
                     </div>
                     <div class="col-md-2 color-time">
-                        <div class="card-time">368</div> days
+                        <div class="card-time">{{item.days}}</div> days
                     </div>
                     <div class="col-md-2 color-time">
-                        <div class="card-time">1</div> hour
+                        <div class="card-time">{{item.hours}}</div> hour
                     </div>
                     <div class="col-md-2 color-time">
-                        <div class="card-time">35</div> minutes
+                        <div class="card-time">{{item.minutes}}</div> minutes
                     </div>
                     <div class="col-md-2 color-time">
-                        <div class="card-time">29</div> seconds
+                        <div class="card-time">{{item.seconds}}</div> seconds
                     </div>
                 </div>
           </div>
