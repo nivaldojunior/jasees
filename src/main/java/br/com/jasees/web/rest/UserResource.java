@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing users.
@@ -168,6 +169,24 @@ public class UserResource {
         return ResponseUtil.wrapOrNotFound(
             userService.getUserWithAuthoritiesByLogin(login)
                 .map(UserDTO::new));
+    }
+
+    /**
+     * GET  /users : get all users.
+     *
+     * @param search like information for user
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     * @throws URISyntaxException if the pagination headers couldn't be generated
+     */
+    @GetMapping("/users/like")
+    @Timed
+    public ResponseEntity<List<UserDTO>> getUsersLike(String search)
+        throws URISyntaxException {
+        List<User> users = userRepository.findByFirstNameLike(search);
+        List<UserDTO> userDTOS = users.stream()
+            .map(UserDTO::new)
+            .collect(Collectors.toList());
+        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
     }
 
     /**
