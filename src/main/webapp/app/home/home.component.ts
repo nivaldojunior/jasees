@@ -27,50 +27,17 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
 
-
-    elections = [{
-        "candList": [
-            "string"
-        ],
-        "desc": "Nome alternativo para Assentos (ex: Mandatos, Deputados)",
-        "endDate": "2017-05-11T21:18:52.763Z",
-        "id": "1",
-        "initDate": "2017-05-10T21:18:52.763Z",
-        "name": "Eleição Uberlândia"
-    }, {
-        "candList": [
-            "string"
-        ],
-        "desc": "Cor a utilizar para o partido e/ou barras (linha 1)(o)",
-        "endDate": "2017-05-09T21:18:52.763Z",
-        "id": "2",
-        "initDate": "2017-05-08T21:18:52.763Z",
-        "name": "Eleição Araguari"
-    }, {
-        "candList": [
-            "string"
-        ],
-        "desc": "Nome alternativo para Assentos (ex: Mandatos, Deputados)",
-        "endDate": "2017-05-11T21:18:52.763Z",
-        "id": "1",
-        "initDate": "2017-05-09T22:18:52.763Z",
-        "name": "Eleição Catalao"
-    },{
-        "candList": [
-            "string"
-        ],
-        "desc": "Nome alternativo para Assentos (ex: Mandatos, Deputados)",
-        "endDate": "2017-05-08T21:18:52.763Z",
-        "id": "1",
-        "initDate": "2017-05-02T22:18:52.763Z",
-        "name": "Eleição Goiania"
-    }]
+    elections = []
+    bkpElections = []
+    filter: string;
 
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
         private eventManager: EventManager
-    ) {}
+    ) {
+        this.filter = '';
+    }
 
     ngOnInit() {
         this.principal.identity().then((account) => {
@@ -78,9 +45,50 @@ export class HomeComponent implements OnInit {
         });
         this.registerAuthenticationSuccess();
 
-        for (let i = 0; i < this.elections.length; i++) {
-            this.calculeTime(this.elections[i])
-        }
+        this.bkpElections = [{
+            "candList": [
+                "string"
+            ],
+            "desc": "Nome alternativo para Assentos (ex: Mandatos, Deputados)",
+            "endDate": "2017-05-11T21:18:52.763Z",
+            "id": "1",
+            "initDate": "2017-05-10T21:18:52.763Z",
+            "name": "Eleição Uberlândia"
+        }, {
+            "candList": [
+                "string"
+            ],
+            "desc": "Cor a utilizar para o partido e/ou barras (linha 1)(o)",
+            "endDate": "2017-05-09T21:18:52.763Z",
+            "id": "2",
+            "initDate": "2017-05-08T21:18:52.763Z",
+            "name": "Eleição Araguari"
+        }, {
+            "candList": [
+                "string"
+            ],
+            "desc": "Nome alternativo para Assentos (ex: Mandatos, Deputados)",
+            "endDate": "2017-05-11T21:18:52.763Z",
+            "id": "3",
+            "initDate": "2017-05-09T22:18:52.763Z",
+            "name": "Eleição Catalao"
+        },{
+            "candList": [
+                "string"
+            ],
+            "desc": "Nome alternativo para Assentos (ex: Mandatos, Deputados)",
+            "endDate": "2017-05-08T21:18:52.763Z",
+            "id": "4",
+            "initDate": "2017-05-02T22:18:52.763Z",
+            "name": "Eleição Goiania"
+        }]
+
+        this.elections = this.bkpElections;
+        setInterval(() => {
+            for (let i = 0; i < this.bkpElections.length; i++) {
+                this.calculeTime(this.bkpElections[i]);
+            } 
+          }, 1000);
     }
 
     registerAuthenticationSuccess() {
@@ -181,5 +189,30 @@ export class HomeComponent implements OnInit {
             alert("Name: " + item.name + " Chamar tela: Resultados")
         }
         
+    }
+
+    searchByCheckbox(type, flag){
+        
+        if(type === 'ALL' && flag){
+            this.elections = this.bkpElections;
+        }
+        if(type !== 'ALL'){
+            let tmp = this.elections.length >= this.bkpElections.length ? [] : this.elections;
+            if(flag){
+                this.bkpElections.forEach(function(element){
+                    if(element.type === type){
+                        tmp.push(element);
+                    }
+                })
+            }else{
+                for (var i = 0; i < tmp.length; i++) {
+                    if(tmp[i].type === type){
+                        tmp.splice(i, 1);
+                        i=-1;
+                    }
+                }
+            }
+            this.elections = tmp;
+        }
     }
 }
