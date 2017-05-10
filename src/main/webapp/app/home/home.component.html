@@ -5,7 +5,7 @@
     </div>
 
     <div class="container col-md-8">
-        <div class="card" *ngFor="let item of elections">
+        <div class="card" *ngFor="let item of elections" (click)="itemSelected(item)">
           <div class="card-header">
             <div class="card-name">
                 {{item.name}}

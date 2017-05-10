@@ -173,4 +173,13 @@ export class HomeComponent implements OnInit {
         item.minutes = result.minutes;
         item.seconds = result.seconds;
     }
+
+    itemSelected(item){
+        if(item.type === 'NOT_STARTED' || item.type === 'INITIATED'){
+            alert("Name: " + item.name + " Chamar tela: Votar")    
+        }else{
+            alert("Name: " + item.name + " Chamar tela: Resultados")
+        }
+        
+    }
 }
