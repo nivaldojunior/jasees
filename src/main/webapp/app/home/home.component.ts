@@ -15,6 +15,9 @@ import {
     Principal
 } from '../shared';
 
+import { Response } from '@angular/http';
+import { ElectionService } from '../entities/election/election.service';
+
 @Component({
     selector: 'jhi-home',
     templateUrl: './home.component.html',
@@ -31,12 +34,55 @@ export class HomeComponent implements OnInit {
     bkpElections = []
     filter: string;
 
+    error: any;
+    success: any;    
+    routeData: any;
+    links: any;
+    totalItems: any;
+    queryCount: any;
+    itemsPerPage: any;
+    page: any;
+    predicate: any;
+    previousPage: any;
+    reverse: any;
+
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
+        private electionService: ElectionService,
         private eventManager: EventManager
     ) {
         this.filter = '';
+
+    }
+
+    loadAll() {
+        this.electionService.query({
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort()}).subscribe(
+            (res: Response) => this.onSuccess(res.json(), res.headers),
+            (res: Response) => this.onError(res.json())
+        );
+    }
+
+    private onSuccess(data, headers) {
+        //this.links = this.parseLinks.parse(headers.get('link'));
+        this.totalItems = headers.get('X-Total-Count');
+        this.queryCount = this.totalItems;
+        // this.page = pagingParams.page;
+        this.bkpElections = data;
+        this.elections = data;
+        setInterval(() => {
+            for (let i = 0; i < this.bkpElections.length; i++) {
+                this.calculeTime(this.bkpElections[i]);
+            }
+        }, 1000);
+    }
+
+    private onError(error) {
+        this.bkpElections = [];
+        //this.alertService.error(error.message, null, null);
     }
 
     ngOnInit() {
@@ -45,50 +91,7 @@ export class HomeComponent implements OnInit {
         });
         this.registerAuthenticationSuccess();
 
-        this.bkpElections = [{
-            "candList": [
-                "string"
-            ],
-            "desc": "Nome alternativo para Assentos (ex: Mandatos, Deputados)",
-            "endDate": "2017-05-11T21:18:52.763Z",
-            "id": "1",
-            "initDate": "2017-05-10T21:18:52.763Z",
-            "name": "Eleição Uberlândia"
-        }, {
-            "candList": [
-                "string"
-            ],
-            "desc": "Cor a utilizar para o partido e/ou barras (linha 1)(o)",
-            "endDate": "2017-05-09T21:18:52.763Z",
-            "id": "2",
-            "initDate": "2017-05-08T21:18:52.763Z",
-            "name": "Eleição Araguari"
-        }, {
-            "candList": [
-                "string"
-            ],
-            "desc": "Nome alternativo para Assentos (ex: Mandatos, Deputados)",
-            "endDate": "2017-05-11T21:18:52.763Z",
-            "id": "3",
-            "initDate": "2017-05-09T22:18:52.763Z",
-            "name": "Eleição Catalao"
-        },{
-            "candList": [
-                "string"
-            ],
-            "desc": "Nome alternativo para Assentos (ex: Mandatos, Deputados)",
-            "endDate": "2017-05-08T21:18:52.763Z",
-            "id": "4",
-            "initDate": "2017-05-02T22:18:52.763Z",
-            "name": "Eleição Goiania"
-        }]
-
-        this.elections = this.bkpElections;
-        setInterval(() => {
-            for (let i = 0; i < this.bkpElections.length; i++) {
-                this.calculeTime(this.bkpElections[i]);
-            } 
-          }, 1000);
+        this.loadAll();
     }
 
     registerAuthenticationSuccess() {
@@ -126,43 +129,19 @@ export class HomeComponent implements OnInit {
         };
     };
 
-    convertToDate(date) {
-        let fullyear = date.split("-");
-
-        let year = fullyear[0];
-        let month = fullyear[1];
-
-        let removeT = fullyear[2].split("T");
-        let day = removeT[0];
-
-        let fullHour = removeT[1].split(":");
-
-        let hours = fullHour[0];
-        let minutes = fullHour[1];
-
-        let seconds = fullHour[2].split(".")[0];
-
-        return new Date(year, month - 1, day, hours, minutes, seconds, 0);
-    };
-
     calculeTime(item) {
-
-        let date = new Date(item.initDate);
-        let stringInitDate = item.initDate;
-        let stringEndDate = item.endDate;
+        
+        let now = new Date();
+        let initDate = item.initDate;
+        let endDate = item.endDate;
 
         let type = "";
-        let result={
+        let result = {
             days: 0,
             hours: 0,
             minutes: 0,
             seconds: 0
         };
-
-        let now = new Date();
-        let initDate = this.convertToDate(stringInitDate);
-        let endDate = this.convertToDate(stringEndDate);
-
 
         if (endDate.getTime() - now.getTime() <= 0) {
             type = "FINALIZED";
@@ -182,37 +161,45 @@ export class HomeComponent implements OnInit {
         item.seconds = result.seconds;
     }
 
-    itemSelected(item){
-        if(item.type === 'NOT_STARTED' || item.type === 'INITIATED'){
-            alert("Name: " + item.name + " Chamar tela: Votar")    
-        }else{
+    itemSelected(item) {
+        if (item.type === 'NOT_STARTED' || item.type === 'INITIATED') {
+            alert("Name: " + item.name + " Chamar tela: Votar")
+        } else {
             alert("Name: " + item.name + " Chamar tela: Resultados")
         }
-        
+
     }
 
-    searchByCheckbox(type, flag){
-        
-        if(type === 'ALL' && flag){
+    searchByCheckbox(type, flag) {
+
+        if (type === 'ALL' && flag) {
             this.elections = this.bkpElections;
         }
-        if(type !== 'ALL'){
+        if (type !== 'ALL') {
             let tmp = this.elections.length >= this.bkpElections.length ? [] : this.elections;
-            if(flag){
-                this.bkpElections.forEach(function(element){
-                    if(element.type === type){
+            if (flag) {
+                this.bkpElections.forEach(function(element) {
+                    if (element.type === type) {
                         tmp.push(element);
                     }
                 })
-            }else{
+            } else {
                 for (var i = 0; i < tmp.length; i++) {
-                    if(tmp[i].type === type){
+                    if (tmp[i].type === type) {
                         tmp.splice(i, 1);
-                        i=-1;
+                        i = -1;
                     }
                 }
             }
             this.elections = tmp;
         }
+    }
+
+    sort() {
+        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
+        if (this.predicate !== 'id') {
+            result.push('id');
+        }
+        return result;
     }
 }

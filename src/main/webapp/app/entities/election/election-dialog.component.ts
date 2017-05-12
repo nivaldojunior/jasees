@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager, AlertService } from 'ng-jhipster';
@@ -9,21 +9,42 @@ import { Election } from './election.model';
 import { ElectionPopupService } from './election-popup.service';
 import { ElectionService } from './election.service';
 
+import { User, UserService } from '../../shared';
+
+import { CompleterService, CompleterData } from 'ng2-completer';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/Rx';
+
 @Component({
     selector: 'jhi-election-dialog',
-    templateUrl: './election-dialog.component.html'
+    templateUrl: './election-dialog.component.html',
+    styles: [`
+    .electionDialogAutoComplete {
+            position: absolute; top: 465px; margin-left: 14px; margin-right: 16px; width: 96%;
+    }
+    .carousel-item {
+        margin-left: 33%;
+    }
+  `]
 })
 export class ElectionDialogComponent implements OnInit {
 
     election: Election;
     authorities: any[];
+    private dataService: CompleterData;
+    users: any[];
     isSaving: boolean;
+    
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
         private electionService: ElectionService,
-        private eventManager: EventManager
+        private eventManager: EventManager,
+        private userService: UserService,
+        private completerService: CompleterService
     ) {
+        this.dataService = completerService.local([], 'firstName', 'firstName');
+        this.users = [];
     }
 
     ngOnInit() {
@@ -36,6 +57,11 @@ export class ElectionDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        let candList = []
+        this.users.forEach(function(element){
+            candList.push(element.id);
+        })
+        this.election.candList = candList;
         if (this.election.id !== undefined) {
             this.electionService.update(this.election)
                 .subscribe((res: Election) =>
@@ -62,10 +88,36 @@ export class ElectionDialogComponent implements OnInit {
         this.isSaving = false;
         this.onError(error);
     }
-
     private onError(error) {
-        this.alertService.error(error.message, null, null);
+        this.alertService.error(error.error, error.message, null);
     }
+
+    searchUsers(keyword) {
+        if (keyword) {
+            this.userService.like(keyword).subscribe((response) => this.onSuccess(response));
+        }
+    }
+
+    onSelected (userSelected) {
+        if(userSelected){
+            let bool = true;
+            for(let i=0; i < this.users.length; i++){
+                if(this.users[i].id === userSelected.originalObject.id){
+                    bool= false;
+                    break;
+                }
+            }
+            if(bool){
+                this.users.push(userSelected.originalObject)
+            }
+        }
+    }
+
+    onSuccess (response) {
+        let timedRes = Observable.from([response]);
+        this.dataService = this.completerService.local(timedRes, 'firstName', 'firstName');
+    }
+
 }
 
 @Component({
