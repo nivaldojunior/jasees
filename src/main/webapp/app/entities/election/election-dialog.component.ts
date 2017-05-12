@@ -25,6 +25,24 @@ import 'rxjs/Rx';
     .carousel-item {
         margin-left: 33%;
     }
+
+    .span-no-candidate {
+        font-size: 24px;
+        color: #ff0000;
+        margin-left: 33%;
+    }
+
+    .slide-carousel {
+      background: darkgray;
+    }
+
+    .span-slide {
+        font-size: 23px;
+        margin-left: 30%;
+        color: black;
+        font-weight: 500;
+    }
+
   `]
 })
 export class ElectionDialogComponent implements OnInit {
@@ -109,6 +127,15 @@ export class ElectionDialogComponent implements OnInit {
             }
             if(bool){
                 this.users.push(userSelected.originalObject)
+            }
+        }
+    }
+
+    candidateSelected (userSelected) {
+        for(let i=0; i < this.users.length; i++){
+            if(this.users[i].id === userSelected.id){
+                this.users.splice(i,1);
+                break;
             }
         }
     }
