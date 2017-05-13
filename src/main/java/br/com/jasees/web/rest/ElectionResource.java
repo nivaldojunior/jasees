@@ -211,7 +211,14 @@ public class ElectionResource {
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "electionnotfinished", "Election is not finished"))
                 .body(null);
         } else {
-            return ResponseUtil.wrapOrNotFound(electionService.verifyVote(election.get(), pNumber));
+            Optional<User> candidate = electionService.verifyVote(election.get(), pNumber);
+            if(candidate.isPresent()){
+                return ResponseEntity.ok().body(candidate.get());
+            }else{
+                return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "pNumber", "Pnumber not found"))
+                    .body(null);
+            }
         }
     }
 
