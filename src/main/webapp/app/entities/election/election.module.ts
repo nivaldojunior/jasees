@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Ng2CompleterModule } from "ng2-completer";
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 
+import { ChartsModule } from 'ng2-charts';
+
 import { JaseesSharedModule } from '../../shared';
 import {
     ElectionService,
@@ -35,7 +37,8 @@ const ENTITY_STATES = [
         BrowserModule,
         Ng2CompleterModule,
         FormsModule,
-        CarouselModule.forRoot()
+        CarouselModule.forRoot(),
+        ChartsModule
     ],
     declarations: [
         ElectionComponent,

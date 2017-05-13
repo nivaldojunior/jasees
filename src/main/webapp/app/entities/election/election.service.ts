@@ -49,6 +49,17 @@ export class ElectionService {
         ;
     }
 
+    results(id: number): Observable<Election> {
+        return this.http.get(`${this.resourceUrl}/${id}/results`).map((res: Response) => {
+            const jsonResponse = res.json();
+            jsonResponse.initDate = this.dateUtils
+                .convertDateTimeFromServer(jsonResponse.initDate);
+            jsonResponse.endDate = this.dateUtils
+                .convertDateTimeFromServer(jsonResponse.endDate);
+            return jsonResponse;
+        });
+    }
+
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }

@@ -1,10 +1,26 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { EventManager   } from 'ng-jhipster';
+import {
+    Component,
+    OnInit,
+    OnDestroy
+} from '@angular/core';
+import {
+    ActivatedRoute
+} from '@angular/router';
+import {
+    Subscription
+} from 'rxjs/Rx';
+import {
+    EventManager
+} from 'ng-jhipster';
 
-import { Election } from './election.model';
-import { ElectionService } from './election.service';
+import {
+    Election
+} from './election.model';
+import {
+    ElectionService
+} from './election.service';
+
+
 
 @Component({
     selector: 'jhi-election-result',
@@ -12,61 +28,80 @@ import { ElectionService } from './election.service';
 })
 export class ElectionResultComponent implements OnInit, OnDestroy {
 
-    election: Election;
+    election: any[];
     private subscription: any;
     private eventSubscriber: Subscription;
-    dataSource: Object;
 
-    constructor(
+    public barChartOptions: any = {
+        scaleShowVerticalLines: false,
+        responsive: true
+    };
+    public barChartLabels: string[];
+    public barChartType: string = 'horizontalBar';
+    public barChartLegend: boolean = false;
+
+    public barChartData: any[] = [{
+        data: []
+    }];
+
+    // events
+    public chartClicked(e: any): void {
+        console.log(e);
+    }
+
+        public chartHovered(e: any): void {
+        console.log(e);
+    }
+
+        constructor(
         private eventManager: EventManager,
         private electionService: ElectionService,
         private route: ActivatedRoute
-    ) {
-        this.dataSource = {
-          "chart": {
-            "caption": "Harry's SuperMart",
-            "subCaption": "Top 5 stores in last month by revenue"
-          },
-          "data": [{
-            "label": "Bakersfield Central",
-             "value": "880000"
-          }, {
-            "label": "Garden Groove harbour",
-            "value": "730000"
-          }, {
-            "label": "Los Angeles Topanga",
-            "value": "590000"
-          }, {
-            "label": "Compton-Rancho Dom",
-            "value": "520000"
-          }, {
-            "label": "Daly City Serramonte",
-            "value": "330000"
-          }]
-        }
-    }
+    ) {}
 
-    ngOnInit() {
+      ngOnInit() {
+        this.barChartLabels = [];
+        this.barChartData[0].data = []
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
     }
 
-    load(id) {        
-        this.electionService.find(id).subscribe((election) => {
-            this.election = election;
+    load(id) {
+        this.electionService.results(id).subscribe((election) => {
+            //this.election = election;
+
+            this.election = [{
+                "candidate": "Teste",
+                "vote": 20
+            },{
+                "candidate": "Maria",
+                "vote": 30
+            },{
+                "candidate": "Victor",
+                "vote": 50
+            }, {
+                "candidate": "Joao",
+                "vote": 70
+            }];
+
+            for(let i=0; i < this.election.length; i++){
+              this.barChartLabels.push(this.election[i].candidate);
+              this.barChartData[0].data.push(this.election[i].vote);
+            }
+
         });
     }
 
-    loadUsers(){
+    loadUsers() {
 
     }
 
-    previousState() {
+        previousState() {
         window.history.back();
     }
 
-    ngOnDestroy() {
+        ngOnDestroy() {
         this.subscription.unsubscribe();
         this.eventManager.destroy(this.eventSubscriber);
     }
