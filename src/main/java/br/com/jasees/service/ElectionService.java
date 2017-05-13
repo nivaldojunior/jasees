@@ -5,6 +5,8 @@ import br.com.jasees.domain.User;
 import br.com.jasees.repository.ElectionRepository;
 import br.com.jasees.repository.UserRepository;
 import br.com.jasees.security.SecurityUtils;
+import br.com.jasees.service.dto.UserDTO;
+import br.com.jasees.web.rest.vm.ElectionResultVM;
 import br.com.jasees.web.rest.vm.VoteVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.time.ZonedDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Service Implementation for managing Election.
@@ -52,14 +51,20 @@ public class ElectionService {
         return Optional.ofNullable(userRepository.findOne(election.verifyVote(new BigInteger(pNumber))));
     }
 
-    public Map<String, Integer> getElectionResult(Election election) {
-        Map<String, Integer> result = new LinkedHashMap<>();
+    public List<ElectionResultVM> getElectionResult(Election election) {
+        List<ElectionResultVM> results = new ArrayList<>();
         election.countVotes()
             .entrySet()
             .stream()
             .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-            .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));
-        return result;
+            .forEachOrdered(x -> {
+                ElectionResultVM result = new ElectionResultVM();
+                UserDTO userDTO = new UserDTO(userRepository.findOne(x.getKey()));
+                result.setCandidate(userDTO);
+                result.setVotes(x.getValue());
+                results.add(result);
+            });
+        return results;
     }
 
     public Page<Election> getElections(Pageable pageable, String filter) {

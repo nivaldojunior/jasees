@@ -9,6 +9,7 @@ import br.com.jasees.security.SecurityUtils;
 import br.com.jasees.service.ElectionService;
 import br.com.jasees.web.rest.util.HeaderUtil;
 import br.com.jasees.web.rest.util.PaginationUtil;
+import br.com.jasees.web.rest.vm.ElectionResultVM;
 import br.com.jasees.web.rest.vm.VoteVM;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -216,7 +217,7 @@ public class ElectionResource {
 
     @GetMapping("/elections/{id}/results")
     @Timed
-    public ResponseEntity<Map<String, Integer>> getResults(@PathVariable String id) {
+    public ResponseEntity<List<ElectionResultVM>> getResults(@PathVariable String id) {
         log.debug("REST request to get result of Election : {}", id);
 
         Optional<Election> election = Optional.ofNullable(electionRepository.findOne(id));
