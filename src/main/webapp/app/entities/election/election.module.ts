@@ -19,6 +19,8 @@ import {
     electionRoute,
     electionPopupRoute,
     ElectionResolvePagingParams,
+    ElectionCandidateElectComponent,
+    ElectionResultComponent,
 } from './';
 
 const ENTITY_STATES = [
@@ -42,6 +44,8 @@ const ENTITY_STATES = [
         ElectionDeleteDialogComponent,
         ElectionPopupComponent,
         ElectionDeletePopupComponent,
+        ElectionCandidateElectComponent,
+        ElectionResultComponent,
     ],
     entryComponents: [
         ElectionComponent,

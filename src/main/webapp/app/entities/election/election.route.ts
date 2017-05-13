@@ -9,6 +9,11 @@ import { ElectionDetailComponent } from './election-detail.component';
 import { ElectionPopupComponent } from './election-dialog.component';
 import { ElectionDeletePopupComponent } from './election-delete-dialog.component';
 
+import { ElectionResultComponent } from './election-result.component';
+import { ElectionCandidateElectComponent } from './election-candidate-elect.component';
+
+
+
 import { Principal } from '../../shared';
 
 @Injectable()
@@ -42,6 +47,22 @@ export const electionRoute: Routes = [
   }, {
     path: 'election/:id',
     component: ElectionDetailComponent,
+    data: {
+        authorities: ['ROLE_USER'],
+        pageTitle: 'Elections'
+    },
+    canActivate: [UserRouteAccessService]
+  }, {
+    path: 'election-result/:id',
+    component: ElectionResultComponent,
+    data: {
+        authorities: ['ROLE_USER'],
+        pageTitle: 'Elections'
+    },
+    canActivate: [UserRouteAccessService]
+  }, {
+    path: 'election-vote/:id',
+    component: ElectionCandidateElectComponent,
     data: {
         authorities: ['ROLE_USER'],
         pageTitle: 'Elections'

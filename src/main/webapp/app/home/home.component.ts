@@ -15,6 +15,7 @@ import {
     Principal
 } from '../shared';
 
+import { ActivatedRoute, Router } from '@angular/router';
 import { Response } from '@angular/http';
 import { ElectionService } from '../entities/election/election.service';
 
@@ -50,7 +51,8 @@ export class HomeComponent implements OnInit {
         private principal: Principal,
         private loginModalService: LoginModalService,
         private electionService: ElectionService,
-        private eventManager: EventManager
+        private eventManager: EventManager,
+        private router: Router
     ) {
         this.filter = '';
 
@@ -163,9 +165,9 @@ export class HomeComponent implements OnInit {
 
     itemSelected(item) {
         if (item.type === 'NOT_STARTED' || item.type === 'INITIATED') {
-            alert("Name: " + item.name + " Chamar tela: Votar")
+            this.router.navigate(['/election-result/'+item.id]);
         } else {
-            alert("Name: " + item.name + " Chamar tela: Resultados")
+            this.router.navigate(['/election-result/'+item.id]);
         }
 
     }
