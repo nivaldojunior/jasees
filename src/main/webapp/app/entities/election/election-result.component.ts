@@ -123,7 +123,7 @@ export class ElectionResultComponent implements OnInit, OnDestroy {
     }).then(function (results) {
 
       if(results){
-        let imageUrl = results.imageUrl ? results.imageUrl;
+        let imageUrl = results.imageUrl;
         swal({
           title: results.firstName,
           text: '',
