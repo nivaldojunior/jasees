@@ -1,14 +1,13 @@
 <div *ngIf="election">
-    <h2><span>Vote</span> {{election}}</h2>
+    <h2><span>Vote</span> {{election.name}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     
     <div class="form-group" class="slide-carousel">
         <br/>
-        <span class="span-no-candidate" *ngIf="!users.length">No candidate selected</span>
        
         <carousel>
-          <slide class="carousel-slide" *ngFor="let item of users">
+          <slide class="carousel-slide" *ngFor="let item of candList">
             <img *ngIf="item.imageUrl" [src]="item.imageUrl" alt="First slide" width="250" height="250" (click)="candidateSelected(item)">
             <img *ngIf="!item.imageUrl" src="../../../../resources/images/default-user.png" alt="First slide" width="250" height="250" (click)="candidateSelected(item)">
             <br/><span class="span-slide">{{item.firstName}}</span>

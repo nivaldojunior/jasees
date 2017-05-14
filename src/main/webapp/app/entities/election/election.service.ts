@@ -56,6 +56,13 @@ export class ElectionService {
         });
     }
 
+    vote(electionId: string, voteVM: any): Observable<any> {
+        
+        return this.http.post(`${this.resourceUrl}/${electionId}/vote`, voteVM).map((res: Response) => {
+            return res.json();
+        });
+    }
+
     verifyVote(electionId: number, pNumber: number): Observable<any> {
         return this.http.get(`${this.resourceUrl}/${electionId}/verifyVote?pNumber=${pNumber}`).map((res: Response) => {
             return res.json();
