@@ -32,14 +32,8 @@ export class ElectionService {
     }
 
     find(id: number): Observable<Election> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            jsonResponse.initDate = this.dateUtils
-                .convertDateTimeFromServer(jsonResponse.initDate);
-            jsonResponse.endDate = this.dateUtils
-                .convertDateTimeFromServer(jsonResponse.endDate);
-            return jsonResponse;
-        });
+        return this.http.get(`${this.resourceUrl}/${id}`)
+        .map((res: any) => this.convertResponse(res));
     }
 
     query(req?: any): Observable<Response> {
@@ -58,7 +52,7 @@ export class ElectionService {
 
     vote(electionId: string, voteVM: any): Observable<any> {
         
-        return this.http.post(`${this.resourceUrl}/${electionId}/vote`, voteVM).map((res: Response) => {
+        return this.http.put(`${this.resourceUrl}/${electionId}/vote`, voteVM).map((res: Response) => {
             return res.json();
         });
     }

@@ -1,13 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { EventManager   } from 'ng-jhipster';
+import {
+    Component,
+    OnInit,
+    OnDestroy
+} from '@angular/core';
+import {
+    ActivatedRoute
+} from '@angular/router';
+import {
+    Subscription
+} from 'rxjs/Rx';
+import {
+    EventManager
+} from 'ng-jhipster';
 
-import { Election } from './election.model';
-import { ElectionService } from './election.service';
+import {
+    Election
+} from './election.model';
+import {
+    ElectionService
+} from './election.service';
 
 // ES6 Modules
-import { default as swal } from 'sweetalert2'
+import {
+    default as swal
+} from 'sweetalert2'
 
 @Component({
     selector: 'jhi-election-candidate-elect',
@@ -47,13 +63,13 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
     election: Election;
     private subscription: any;
     candList: any[];
+    isVoted: number;
 
     constructor(
         private eventManager: EventManager,
         private electionService: ElectionService,
         private route: ActivatedRoute
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.candList = [];
@@ -62,44 +78,77 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
         });
     }
 
-    load(id) {        
-        this.electionService.find(id).subscribe((election) => {
-            this.election = election;
-            this.candList = this.election.candList
+    load(id) {
 
-            this.candList = [{id: "user-2", firstName: 'Victor Cesar', imageUrl:'http://s2.glbimg.com/PnOZ0wBrJuWEYaPR9sR5zKMnY2A=/s.glbimg.com/jo/g1/f/original/2016/08/24/rodrigo620.jpg'},
-            {id: "admin", firstName: 'Joao Ribeiro', imageUrl:'https://pbs.twimg.com/profile_images/303984501/twitter.jpg'},
-            {id: "user-3", firstName: 'Mario Castro', imageUrl:'http://s2.glbimg.com/6N7STiRsFk1IkGuI_WNZIvGv7Qk=/620x465/s.glbimg.com/jo/g1/f/original/2016/08/24/ivanrocha.jpg'}]
-        });
+        this.electionService.find(id).subscribe(
+            (res: Response) => this.onSuccess(res.json(), res.headers),
+            (res: Response) => this.onError(res.json())
+        );
     }
 
-    candidateSelected (userSelected) {
-        let electionId = this.election.id;
-        let electionService = this.electionService;
-        swal({
-          title: 'Are you sure?',
-          text: "Your candidate selected is: " + userSelected.firstName,
-          imageUrl: userSelected.imageUrl,
-          imageWidth: 300,
-          imageHeight: 300,
-          animation: true,
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, Vote it!'
-        }).then(function () {
-            let voteVM =  { "bias": true, "candidate": userSelected.id }
-            electionService.vote(electionId, voteVM).subscribe((result) => {
-                console.log(result);
-                swal(
-                    'Voted!',
-                    'Your file has been deleted.',
-                    'success'
-                  )
-            });
-          
-        })
-        console.log(userSelected);
+    private onSuccess(election, headers) {
+        this.election = election;
+        this.candList = this.election.candList
+        this.isVoted = headers.get('x-jaseesapp-params');
+        this.candList = [{
+            id: "user-2",
+            firstName: 'Victor Cesar',
+            imageUrl: 'http://s2.glbimg.com/PnOZ0wBrJuWEYaPR9sR5zKMnY2A=/s.glbimg.com/jo/g1/f/original/2016/08/24/rodrigo620.jpg'
+        }, {
+            id: "admin",
+            firstName: 'Joao Ribeiro',
+            imageUrl: 'https://pbs.twimg.com/profile_images/303984501/twitter.jpg'
+        }, {
+            id: "user-3",
+            firstName: 'Mario Castro',
+            imageUrl: 'http://s2.glbimg.com/6N7STiRsFk1IkGuI_WNZIvGv7Qk=/620x465/s.glbimg.com/jo/g1/f/original/2016/08/24/ivanrocha.jpg'
+        }]
+    }
+
+    private onError(error) {
+        //this.alertService.error(error.message, null, null);
+    }
+
+    candidateSelected(userSelected) {
+        let isVoted = this.isVoted; 
+        if (isVoted <= 1) {
+            let electionId = this.election.id;
+            let electionService = this.electionService;
+            swal({
+                title: 'Are you sure?',
+                text: "Your candidate selected is: " + userSelected.firstName,
+                imageUrl: userSelected.imageUrl,
+                imageWidth: 300,
+                imageHeight: 300,
+                animation: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Vote it!'
+            }).then(function() {
+                let voteVM = {
+                    "bias": isVoted === 0 ? true : false,
+                    "candidate": userSelected.id
+                }
+                electionService.vote(electionId, voteVM).subscribe((result) => {
+                    
+                    swal(
+                        'Voted!',
+                        'Your code is: ' + result,
+                        'success'
+                    )
+                    this.isVoted++;
+                });
+
+            })
+
+        } else {
+            swal(
+              'Sorry',
+              'Can not vote anymore',
+              'warning'
+            )
+        }
     }
 
     previousState() {
