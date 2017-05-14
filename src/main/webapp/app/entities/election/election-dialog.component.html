@@ -114,7 +114,6 @@
         </button>
     </div>
 </form>
-<div class="electionDialogAutoComplete">
+<div class="electionDialogAutoComplete"  [ngClass]="!election.id ? 'election-dialog-auto-complete': 'election-dialog-auto-complete-edit'">
 <ng2-completer id="elect_candidates" [(ngModel)]="selectedUser" [datasource]="dataService" [minSearchLength]="0" [clearSelected]="true" (selected)="onSelected($event)" (keyup)="searchUsers(selectedUser)" class="form-control"></ng2-completer>
 </div>
-

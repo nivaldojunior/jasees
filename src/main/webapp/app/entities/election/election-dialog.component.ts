@@ -19,8 +19,11 @@ import 'rxjs/Rx';
     selector: 'jhi-election-dialog',
     templateUrl: './election-dialog.component.html',
     styles: [`
-    .electionDialogAutoComplete {
+    .election-dialog-auto-complete {
             position: absolute; top: 465px; margin-left: 14px; margin-right: 16px; width: 96%;
+    }
+    .election-dialog-auto-complete-edit {
+            position: absolute; top: 544px; margin-left: 14px; margin-right: 16px; width: 96%;
     }
     .carousel-item {
         margin-left: 33%;

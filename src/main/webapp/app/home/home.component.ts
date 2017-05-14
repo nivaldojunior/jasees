@@ -165,7 +165,7 @@ export class HomeComponent implements OnInit {
 
     itemSelected(item) {
         if (item.type === 'NOT_STARTED' || item.type === 'INITIATED') {
-            this.router.navigate(['/election-result/'+item.id]);
+            this.router.navigate(['/election-vote/'+item.id]);
         } else {
             this.router.navigate(['/election-result/'+item.id]);
         }
