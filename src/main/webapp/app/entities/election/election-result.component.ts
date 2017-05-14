@@ -20,7 +20,8 @@ import {
     ElectionService
 } from './election.service';
 
-
+// ES6 Modules
+import { default as swal } from 'sweetalert2'
 
 @Component({
     selector: 'jhi-election-result',
@@ -28,9 +29,10 @@ import {
 })
 export class ElectionResultComponent implements OnInit, OnDestroy {
 
-    election: any[];
+    electionId;
+    election: Election;
     private subscription: any;
-    private eventSubscriber: Subscription;
+    
 
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
@@ -62,32 +64,22 @@ export class ElectionResultComponent implements OnInit, OnDestroy {
       ngOnInit() {
         this.barChartLabels = [];
         this.barChartData[0].data = []
+
         this.subscription = this.route.params.subscribe((params) => {
+            this.electionId = params['id']; 
             this.load(params['id']);
         });
     }
 
     load(id) {
+
+        this.electionService.find(id).subscribe((election) => {
+            this.election = election;
+        });
         this.electionService.results(id).subscribe((election) => {
-            //this.election = election;
-
-            this.election = [{
-                "candidate": "Teste",
-                "vote": 20
-            },{
-                "candidate": "Maria",
-                "vote": 30
-            },{
-                "candidate": "Victor",
-                "vote": 50
-            }, {
-                "candidate": "Joao",
-                "vote": 70
-            }];
-
-            for(let i=0; i < this.election.length; i++){
-              this.barChartLabels.push(this.election[i].candidate);
-              this.barChartData[0].data.push(this.election[i].vote);
+            for(let i=0; i < election.length; i++){
+              this.barChartLabels.push(election[i].candidate.firstName);
+              this.barChartData[0].data.push(election[i].votes);
             }
 
         });
@@ -103,7 +95,52 @@ export class ElectionResultComponent implements OnInit, OnDestroy {
 
         ngOnDestroy() {
         this.subscription.unsubscribe();
-        this.eventManager.destroy(this.eventSubscriber);
+        
+    }
+
+    verifyVote() {
+      let electionService = this.electionService;
+      let electionId = this.electionId;
+      swal({
+      title: 'Verify Vote',
+      input: 'text',
+      showCancelButton: true,
+      confirmButtonText: 'Submit',
+      showLoaderOnConfirm: true,
+      preConfirm: function (pNumber) {
+        return new Promise(function (resolve, reject){
+          electionService.verifyVote(electionId, pNumber).subscribe((results) => {
+            if(!results){
+              reject('Put any error message here')
+            }else{
+              resolve(results)
+            }
+            
+          });
+        })
+      },
+      allowOutsideClick: false
+    }).then(function (results) {
+
+      if(results){
+        let imageUrl = results.imageUrl ? results.imageUrl;
+        swal({
+          title: results.firstName,
+          text: '',
+          imageUrl: imageUrl,
+          imageWidth: 300,
+          imageHeight: 300,
+          animation: true
+        })
+      }else{
+        swal({
+          type: 'error',
+          title: 'Non-existent vote',
+          html: ''
+        })
+      }
+      
+    })
     }
 
 }

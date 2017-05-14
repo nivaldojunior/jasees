@@ -1,7 +1,9 @@
 <div *ngIf="election">
-    <h2><span>Result</span></h2>
+    <h2><span>Result</span> {{election.name}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
+
+    <button (click)="verifyVote()">Verify Vote</button>
 	
 	<canvas baseChart
             [datasets]="barChartData"
@@ -11,4 +13,5 @@
             [chartType]="barChartType"
             (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)"></canvas>
+
 </div>

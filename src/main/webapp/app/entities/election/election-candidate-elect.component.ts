@@ -14,7 +14,6 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
 
     election: Election;
     private subscription: any;
-    private eventSubscriber: Subscription;
 
     constructor(
         private eventManager: EventManager,
@@ -45,7 +44,6 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscription.unsubscribe();
-        this.eventManager.destroy(this.eventSubscriber);
     }
 
 }

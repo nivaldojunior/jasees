@@ -153,7 +153,7 @@ export class HomeComponent implements OnInit {
                 result = this.compareDate(now, initDate);
             } else {
                 type = "INITIATED";
-                result = this.compareDate(initDate, endDate);
+                result = this.compareDate(now, endDate);
             }
         }
         item.type = type;

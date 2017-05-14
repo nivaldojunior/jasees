@@ -49,14 +49,16 @@ export class ElectionService {
         ;
     }
 
-    results(id: number): Observable<Election> {
+    results(id: number): Observable<any> {
         return this.http.get(`${this.resourceUrl}/${id}/results`).map((res: Response) => {
             const jsonResponse = res.json();
-            jsonResponse.initDate = this.dateUtils
-                .convertDateTimeFromServer(jsonResponse.initDate);
-            jsonResponse.endDate = this.dateUtils
-                .convertDateTimeFromServer(jsonResponse.endDate);
             return jsonResponse;
+        });
+    }
+
+    verifyVote(electionId: number, pNumber: number): Observable<any> {
+        return this.http.get(`${this.resourceUrl}/${electionId}/verifyVote?pNumber=${pNumber}`).map((res: Response) => {
+            return res.json();
         });
     }
 
