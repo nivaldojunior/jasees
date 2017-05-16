@@ -90,19 +90,6 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
         this.election = election;
         this.candList = this.election.candList
         this.isVoted = headers.get('x-jaseesapp-params');
-        this.candList = [{
-            id: "user-2",
-            firstName: 'Victor Cesar',
-            imageUrl: 'http://s2.glbimg.com/PnOZ0wBrJuWEYaPR9sR5zKMnY2A=/s.glbimg.com/jo/g1/f/original/2016/08/24/rodrigo620.jpg'
-        }, {
-            id: "admin",
-            firstName: 'Joao Ribeiro',
-            imageUrl: 'https://pbs.twimg.com/profile_images/303984501/twitter.jpg'
-        }, {
-            id: "user-3",
-            firstName: 'Mario Castro',
-            imageUrl: 'http://s2.glbimg.com/6N7STiRsFk1IkGuI_WNZIvGv7Qk=/620x465/s.glbimg.com/jo/g1/f/original/2016/08/24/ivanrocha.jpg'
-        }]
     }
 
     private onError(error) {

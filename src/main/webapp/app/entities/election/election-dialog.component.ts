@@ -78,11 +78,11 @@ export class ElectionDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        let candList = []
-        this.users.forEach(function(element){
-            candList.push(element.id);
-        })
-        this.election.candList = candList;
+        //let candList = []
+        // this.users.forEach(function(element){
+        //     candList.push(element.id);
+        // })
+        this.election.candList = this.users;
         if (this.election.id !== undefined) {
             this.electionService.update(this.election)
                 .subscribe((res: Election) =>
