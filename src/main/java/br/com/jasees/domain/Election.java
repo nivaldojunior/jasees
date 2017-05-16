@@ -3,6 +3,7 @@ package br.com.jasees.domain;
 import br.com.jasees.config.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -46,7 +47,8 @@ public class Election extends AbstractAuditingEntity implements Serializable {
     @NotNull
     @Size(min = 2)
     @Field("cand_list")
-    private Set<String> candList;
+    @DBRef
+    private Set<User> candList;
 
     @JsonIgnore
     @Field("voted_list")
@@ -70,8 +72,8 @@ public class Election extends AbstractAuditingEntity implements Serializable {
         voteError = new HashMap<>();
         resultList = new HashMap<>();
         candList.forEach(cand -> {
-            resultList.put(cand, generatePrimeNumber());
-            voteError.put(cand, 0);
+            resultList.put(cand.getId(), generatePrimeNumber());
+            voteError.put(cand.getId(), 0);
         });
     }
 
@@ -115,11 +117,11 @@ public class Election extends AbstractAuditingEntity implements Serializable {
         this.endDate = endDate;
     }
 
-    public Set<String> getCandList() {
+    public Set<User> getCandList() {
         return candList;
     }
 
-    public void setCandList(Set<String> candList) {
+    public void setCandList(Set<User> candList) {
         this.candList = candList;
     }
 
