@@ -156,6 +156,8 @@ public class ElectionResource {
         Optional<User> user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
         Optional<Election> election = Optional.ofNullable(electionRepository.findOne(id));
 
+        Optional<User> cand = Optional.ofNullable(userRepository.findOne(voteVM.getCandidate()));
+
         if (!user.isPresent()) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "usernotlogged", "You should logged to vote."))
@@ -164,8 +166,7 @@ public class ElectionResource {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "electioninvalid", "Election invalid"))
                 .body(null);
-        } else if (!Optional.ofNullable(userRepository.findOne(voteVM.getCandidate())).isPresent()
-            || !election.get().getCandList().contains(voteVM.getCandidate())) {
+        } else if (!cand.isPresent() || !election.get().getCandList().contains(cand.get())) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "candidateinvalid", "Candidate invalid"))
                 .body(null);
