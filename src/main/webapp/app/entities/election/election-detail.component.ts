@@ -31,9 +31,10 @@ export class ElectionDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-        this.electionService.find(id).subscribe((election) => {
-            this.election = election;
-        });
+        this.electionService.find(id).subscribe(
+            (res: Response) => this.onSuccess(res.json(), res.headers),
+            (res: Response) => this.onError(res.json())
+        );
     }
     previousState() {
         window.history.back();
@@ -47,4 +48,14 @@ export class ElectionDetailComponent implements OnInit, OnDestroy {
     registerChangeInElections() {
         this.eventSubscriber = this.eventManager.subscribe('electionListModification', (response) => this.load(this.election.id));
     }
+
+    private onSuccess(election, headers) {
+        this.election = election;
+    }
+
+    private onError(error) {
+        //this.alertService.error(error.message, null, null);
+    }
+
+
 }
