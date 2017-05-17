@@ -9,6 +9,9 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { ChartsModule } from 'ng2-charts';
 
 import { JaseesSharedModule } from '../../shared';
+
+import { ClipboardModule } from 'ngx-clipboard';
+
 import {
     ElectionService,
     ElectionPopupService,
@@ -38,7 +41,8 @@ const ENTITY_STATES = [
         Ng2CompleterModule,
         FormsModule,
         CarouselModule.forRoot(),
-        ChartsModule
+        ChartsModule,
+        ClipboardModule
     ],
     declarations: [
         ElectionComponent,

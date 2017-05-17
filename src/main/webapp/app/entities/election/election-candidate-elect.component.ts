@@ -25,6 +25,8 @@ import {
     default as swal
 } from 'sweetalert2'
 
+import * as $ from 'jquery';
+
 @Component({
     selector: 'jhi-election-candidate-elect',
     templateUrl: './election-candidate-elect.component.html',
@@ -64,7 +66,8 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
     private subscription: any;
     candList: any[];
     isVoted: number;
-
+    mycode: any;
+    
     constructor(
         private eventManager: EventManager,
         private electionService: ElectionService,
@@ -76,6 +79,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
+
     }
 
     load(id) {
@@ -119,12 +123,19 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                     "candidate": userSelected.id
                 }
                 electionService.vote(electionId, voteVM).subscribe((result) => {
-                    
-                    swal(
-                        'Voted!',
-                        'Your code is: ' + result,
-                        'success'
-                    )
+                    self.mycode = result
+                    swal({
+                        type: 'success',
+                        html: "<div class='input-group'>"+
+                                  "<input id='swal-input1' readonly type='text' class='form-control'>"+
+                              "</div>",
+                        confirmButtonText:
+                         '<i class="fa fa-files-o"></i> Copy!',
+                        onOpen: function () {
+                            $('#swal-input1').val(result);
+                            
+                        }
+                    })
                     self.isVoted = self.isVoted == 0 ? 1 : 2;
                 });
 
