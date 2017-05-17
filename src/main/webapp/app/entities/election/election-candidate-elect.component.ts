@@ -114,7 +114,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                 confirmButtonText: 'Yes, Vote it!'
             }).then(function() {
                 let voteVM = {
-                    "bias": isVoted == 0 ? true : false,
+                    "bias": isVoted === "0" ? true : false,
                     "candidate": userSelected.id
                 }
                 electionService.vote(electionId, voteVM).subscribe((result) => {
@@ -124,11 +124,11 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                         'Your code is: ' + result,
                         'success'
                     )
-                    isVoted = isVoted ? "1" : "2";
+                    isVoted = isVoted === "0" ? "1" : "2";
                 });
 
             })
-            
+
         } else {
             swal(
               'Sorry',
