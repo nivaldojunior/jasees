@@ -97,8 +97,8 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
     }
 
     candidateSelected(userSelected) {
-        let isVoted = this.isVoted; 
-        if (isVoted <= 1) {
+        let self = this;
+        if (self.isVoted <= 1) {
             let electionId = this.election.id;
             let electionService = this.electionService;
             swal({
@@ -112,9 +112,10 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, Vote it!'
-            }).then(function() {
+            }).then(function(x) {
+                console.log(this)
                 let voteVM = {
-                    "bias": isVoted == 0 ? true : false,
+                    "bias": self.isVoted == 0 ? true : false,
                     "candidate": userSelected.id
                 }
                 electionService.vote(electionId, voteVM).subscribe((result) => {
@@ -124,7 +125,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                         'Your code is: ' + result,
                         'success'
                     )
-                    isVoted = isVoted == 0 ? 1 : 2;
+                    self.isVoted = self.isVoted == 0 ? 1 : 2;
                 });
 
             })
