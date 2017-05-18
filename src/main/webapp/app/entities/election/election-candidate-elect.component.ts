@@ -1,7 +1,7 @@
 import {
     Component,
     OnInit,
-    OnDestroy
+    OnDestroy,
 } from '@angular/core';
 import {
     ActivatedRoute
@@ -27,47 +27,25 @@ import {
 
 import * as $ from 'jquery';
 
+
 @Component({
     selector: 'jhi-election-candidate-elect',
     templateUrl: './election-candidate-elect.component.html',
-    styles: [`
-    .election-dialog-auto-complete {
-            position: absolute; top: 465px; margin-left: 14px; margin-right: 16px; width: 96%;
-    }
-    .election-dialog-auto-complete-edit {
-            position: absolute; top: 544px; margin-left: 14px; margin-right: 16px; width: 96%;
-    }
-    .carousel-item {
-        margin-left: 33%;
-    }
+    styleUrls: [
+        'election-candidate-elect.component.scss'
+    ]
 
-    .span-no-candidate {
-        font-size: 24px;
-        color: #ff0000;
-        margin-left: 33%;
-    }
-
-    .slide-carousel {
-      background: darkgray;
-    }
-
-    .span-slide {
-        font-size: 23px;
-        margin-left: 30%;
-        color: black;
-        font-weight: 500;
-    }
-
-  `]
 })
 export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
+
 
     election: Election;
     private subscription: any;
     candList: any[];
     isVoted: number;
     mycode: any;
-    
+
+
     constructor(
         private eventManager: EventManager,
         private electionService: ElectionService,
@@ -79,6 +57,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
+        
 
     }
 
@@ -94,6 +73,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
         this.election = election;
         this.candList = this.election.candList
         this.isVoted = headers.get('X-jaseesApp-params');
+
     }
 
     private onError(error) {

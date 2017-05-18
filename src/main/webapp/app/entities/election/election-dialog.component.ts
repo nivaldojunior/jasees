@@ -35,10 +35,6 @@ import 'rxjs/Rx';
         margin-left: 33%;
     }
 
-    .slide-carousel {
-      background: darkgray;
-    }
-
     .span-slide {
         font-size: 23px;
         margin-left: 30%;
