@@ -41,10 +41,10 @@ public class ElectionService {
         return election;
     }
 
-    public BigInteger vote(Election election, String user, VoteVM voteVM) {
+    public String vote(Election election, String user, VoteVM voteVM) {
         BigInteger result = election.vote(user, voteVM.getCandidate(), voteVM.getBias());
         electionRepository.save(election);
-        return result;
+        return result.toString();
     }
 
     public Optional<User> verifyVote(Election election, String pNumber) {
