@@ -15,10 +15,9 @@
     }
 
     .span-slide {
-        font-size: 23px;
-        margin-left: 30%;
-        color: black;
-        font-weight: 500;
+      font-size: 23px;
+      position: absolute;
+      bottom: 20px;
     }
 
     /*Substituir css dentro do arquivo _carousel.scss*/

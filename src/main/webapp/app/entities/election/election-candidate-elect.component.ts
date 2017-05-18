@@ -43,8 +43,6 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
     private subscription: any;
     candList: any[];
     isVoted: number;
-    mycode: any;
-
 
     constructor(
         private eventManager: EventManager,
@@ -103,7 +101,6 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                     "candidate": userSelected.id
                 }
                 electionService.vote(electionId, voteVM).subscribe((result) => {
-                    self.mycode = result
                     swal({
                         type: 'success',
                         html: "<div class='input-group'>"+

@@ -2,8 +2,46 @@
     <h2><span>Vote</span> {{election.name}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
+
+     <!-- Swiper -->
+    <div [swiper]="config" class="swiper-container" (indexChange)="onIndexChange($event)" style="background: #eee;">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+            <div class="swiper-slide">Slide 4</div>
+            <div class="swiper-slide">Slide 5</div>
+            <div class="swiper-slide">Slide 6</div>
+            <div class="swiper-slide">Slide 7</div>
+            <div class="swiper-slide">Slide 8</div>
+            <div class="swiper-slide">Slide 9</div>
+            <div class="swiper-slide">Slide 10</div>
+        </div>
+        <!-- Add Pagination -->
+       <div class="swiper-scrollbar"></div>
+
+       <div class="swiper-pagination"></div>
+       <div class="swiper-button-prev"></div>
+       <div class="swiper-button-next"></div>
+    </div>
+
+  <div [swiper]="config" class="swiper-container" (indexChange)="onIndexChange($event)" style="background: #eee;">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let item of candList">
+              <img width="250" height="250" [src]="item.imageUrl" (click)="candidateSelected(item)">
+              
+              <span class="span-slide">{{item.firstName}}</span>
+            </div>
+        </div>
+        <!-- Add Pagination -->
+       <div class="swiper-scrollbar"></div>
+
+       <div class="swiper-pagination"></div>
+       <div class="swiper-button-prev"></div>
+       <div class="swiper-button-next"></div>
+    </div>
     
-    <div class="form-group" class="slide-carousel">
+    <!-- <div class="form-group" class="slide-carousel">
         <br/>
        
         <carousel class="my-carousel">
@@ -13,16 +51,39 @@
             <br/><span class="span-slide">{{item.firstName}}</span>
           </slide>
         </carousel>
-    </div>
+    </div> -->
     Seu voto sera: {{isVoted}}
 
 
-    <div class="input-group">
-      <input type="text" class="form-control" [(ngModel)]="mycode" placeholder="content will be copy after click the copy button"
-        #inputTarget>
-      <span class="input-group-btn" >
-        <button id="button-clipboard" class="btn btn-default" [class.btn-success]= "isCopied2" type="button" [ngxClipboard]="inputTarget" (cbOnSuccess)="isCopied2 = true">copy</button>
-      </span>
-    </div>
+     
 
 </div>
+
+
+<style>
+
+    .swiper-container {
+        width: 100%;
+        height: 300px;
+        margin: 20px auto;
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+</style>
