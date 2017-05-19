@@ -2,6 +2,7 @@ import {
     Component,
     OnInit,
     OnDestroy,
+    ChangeDetectorRef,
 } from '@angular/core';
 import {
     ActivatedRoute
@@ -30,10 +31,7 @@ import * as $ from 'jquery';
 
 @Component({
     selector: 'jhi-election-candidate-elect',
-    templateUrl: './election-candidate-elect.component.html',
-    styleUrls: [
-        'election-candidate-elect.component.scss'
-    ]
+    templateUrl: './election-candidate-elect.component.html'
 
 })
 export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
@@ -44,14 +42,51 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
     candList: any[];
     isVoted: number;
 
+    config: Object = {
+        pagination: '.swiper-pagination',
+        slidesPerView: 3,
+        paginationClickable: true,
+        spaceBetween: 30,
+        freeMode: true,
+        centeredSlides: true,
+        keyboardControl: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev'
+    };
+
     constructor(
         private eventManager: EventManager,
         private electionService: ElectionService,
-        private route: ActivatedRoute
-    ) {}
+        private route: ActivatedRoute,
+        private cdRef:ChangeDetectorRef
+    ) {
+        this.candList = [ {
+                            "id" : "user-2",
+                            "login" : "admin",
+                            "firstName" : "admin",
+                            "lastName" : "Administrator",
+                            "email" : "admin@localhost",
+                            "activated" : true,
+                            "langKey" : "en",
+                            "imageUrl" : "http://rismedia.com/wp-content/uploads/2016/08/residential_real_estate.jpg",
+                            "resetKey" : null,
+                            "resetDate" : null
+                          }, {
+                            "id" : "user-1",
+                            "login" : "anonymoususer",
+                            "firstName" : "Anonymous",
+                            "lastName" : "User",
+                            "email" : "anonymous@localhost",
+                            "activated" : true,
+                            "langKey" : "en",
+                            "imageUrl" : "http://s2.glbimg.com/cly6PDa5rOrXhmSpEggtfmFdqPE=/620x465/s.glbimg.com/jo/g1/f/original/2016/08/26/arnaldozimmermann.jpg",
+                            "resetKey" : null,
+                            "resetDate" : null
+                          } ]
+    }
 
     ngOnInit() {
-        this.candList = [];
+        
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
@@ -69,9 +104,12 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
 
     private onSuccess(election, headers) {
         this.election = election;
-        this.candList = this.election.candList
+        //this.candList = this.election.candList
         this.isVoted = headers.get('X-jaseesApp-params');
+    }
 
+    renderized() {
+        //this.cdRef.detectChanges();   
     }
 
     private onError(error) {
@@ -103,15 +141,9 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                 electionService.vote(electionId, voteVM).subscribe((result) => {
                     swal({
                         type: 'success',
-                        html: "<div class='input-group'>"+
-                                  "<input id='swal-input1' readonly type='text' class='form-control'>"+
-                              "</div>",
+                        html: "Your vote is: " + result,
                         confirmButtonText:
-                         '<i class="fa fa-files-o"></i> Copy!',
-                        onOpen: function () {
-                            $('#swal-input1').val(result);
-                            
-                        }
+                         '<i class="fa fa-files-o"></i> Copy!'
                     })
                     self.isVoted = self.isVoted == 0 ? 1 : 2;
                 });

@@ -12,8 +12,8 @@ import { JaseesSharedModule } from '../../shared';
 
 import { ClipboardModule } from 'ngx-clipboard';
 
-import { SwiperModule } from 'ngx-swiper-wrapper';
-import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { SwiperModule } from 'angular2-useful-swiper';
+
 
 import {
     ElectionService,
@@ -36,16 +36,6 @@ const ENTITY_STATES = [
     ...electionPopupRoute,
 ];
 
-const SWIPER_CONFIG: SwiperConfigInterface = {
-    pagination: '.swiper-pagination',
-    slidesPerView: 3,
-    paginationClickable: true,
-    spaceBetween: 30,
-    freeMode: true,
-    centeredSlides: true,
-    keyboardControl: true
-};
-
 
 @NgModule({
     imports: [
@@ -57,7 +47,7 @@ const SWIPER_CONFIG: SwiperConfigInterface = {
         CarouselModule.forRoot(),
         ChartsModule,
         ClipboardModule,
-        SwiperModule.forRoot(SWIPER_CONFIG)
+        SwiperModule
     ],
     declarations: [
         ElectionComponent,

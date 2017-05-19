@@ -3,59 +3,18 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
 
-     <!-- Swiper -->
-    <div [swiper]="config" class="swiper-container" (indexChange)="onIndexChange($event)" style="background: #eee;">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">Slide 1</div>
-            <div class="swiper-slide">Slide 2</div>
-            <div class="swiper-slide">Slide 3</div>
-            <div class="swiper-slide">Slide 4</div>
-            <div class="swiper-slide">Slide 5</div>
-            <div class="swiper-slide">Slide 6</div>
-            <div class="swiper-slide">Slide 7</div>
-            <div class="swiper-slide">Slide 8</div>
-            <div class="swiper-slide">Slide 9</div>
-            <div class="swiper-slide">Slide 10</div>
+    <swiper [config]="config" style="background: #eee;" #usefulSwiper>
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" *ngFor="let item of candList">
+          <img width="250" height="250" [src]="item.imageUrl" (click)="candidateSelected(item)">
+          
+          <span class="span-slide">{{item.firstName}}</span>
         </div>
-        <!-- Add Pagination -->
-       <div class="swiper-scrollbar"></div>
-
-       <div class="swiper-pagination"></div>
-       <div class="swiper-button-prev"></div>
-       <div class="swiper-button-next"></div>
     </div>
-
-  <div [swiper]="config" class="swiper-container" (indexChange)="onIndexChange($event)" style="background: #eee;">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide" *ngFor="let item of candList">
-              <img width="250" height="250" [src]="item.imageUrl" (click)="candidateSelected(item)">
-              
-              <span class="span-slide">{{item.firstName}}</span>
-            </div>
-        </div>
-        <!-- Add Pagination -->
-       <div class="swiper-scrollbar"></div>
-
-       <div class="swiper-pagination"></div>
-       <div class="swiper-button-prev"></div>
-       <div class="swiper-button-next"></div>
-    </div>
-    
-    <!-- <div class="form-group" class="slide-carousel">
-        <br/>
-       
-        <carousel class="my-carousel">
-          <slide class="carousel-slide" *ngFor="let item of candList">
-            <img *ngIf="item.imageUrl" [src]="item.imageUrl" alt="First slide" width="250" height="250" (click)="candidateSelected(item)">
-            
-            <br/><span class="span-slide">{{item.firstName}}</span>
-          </slide>
-        </carousel>
-    </div> -->
-    Seu voto sera: {{isVoted}}
-
-
-     
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+</swiper>
 
 </div>
 
@@ -85,5 +44,11 @@
         -ms-flex-align: center;
         -webkit-align-items: center;
         align-items: center;
+    }
+
+    .span-slide {
+      font-size: 23px;
+      position: absolute;
+      bottom: 20px;
     }
 </style>
