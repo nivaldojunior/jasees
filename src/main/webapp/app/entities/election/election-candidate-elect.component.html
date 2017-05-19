@@ -3,23 +3,31 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
 
+    <h2><span class="description">{{election.desc}}</span></h2>
+    <br/>
+
     <swiper [config]="config" style="background: #eee;" #usefulSwiper>
-    <div class="swiper-wrapper">
-        <div class="swiper-slide" *ngFor="let item of candList">
-          <img width="250" height="250" [src]="item.imageUrl" (click)="candidateSelected(item)">
-          
-          <span class="span-slide">{{item.firstName}}</span>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let item of candList">
+              <img *ngIf="!item.imageUrl" src="../../../../resources/images/default-user.png" alt="First slide" width="250" height="250" (click)="candidateSelected(item)">
+              <img *ngIf="item.imageUrl" width="250" height="250" [src]="item.imageUrl" (click)="candidateSelected(item)">
+              
+              <span class="span-slide">{{item.firstName}}</span>
+            </div>
         </div>
-    </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-</swiper>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </swiper>
 
 </div>
 
 
 <style>
+
+    .description {
+        margin-left: 26%;
+    }
 
     .swiper-container {
         width: 100%;

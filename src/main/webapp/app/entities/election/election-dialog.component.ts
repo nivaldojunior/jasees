@@ -51,6 +51,18 @@ export class ElectionDialogComponent implements OnInit {
     private dataService: CompleterData;
     users: any[];
     isSaving: boolean;
+
+    config: Object = {
+        pagination: '.swiper-pagination',
+        slidesPerView: 3,
+        paginationClickable: true,
+        spaceBetween: 30,
+        freeMode: true,
+        centeredSlides: true,
+        keyboardControl: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev'
+    };
     
     constructor(
         public activeModal: NgbActiveModal,

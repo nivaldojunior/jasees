@@ -60,29 +60,6 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private cdRef:ChangeDetectorRef
     ) {
-        this.candList = [ {
-                            "id" : "user-2",
-                            "login" : "admin",
-                            "firstName" : "admin",
-                            "lastName" : "Administrator",
-                            "email" : "admin@localhost",
-                            "activated" : true,
-                            "langKey" : "en",
-                            "imageUrl" : "http://rismedia.com/wp-content/uploads/2016/08/residential_real_estate.jpg",
-                            "resetKey" : null,
-                            "resetDate" : null
-                          }, {
-                            "id" : "user-1",
-                            "login" : "anonymoususer",
-                            "firstName" : "Anonymous",
-                            "lastName" : "User",
-                            "email" : "anonymous@localhost",
-                            "activated" : true,
-                            "langKey" : "en",
-                            "imageUrl" : "http://s2.glbimg.com/cly6PDa5rOrXhmSpEggtfmFdqPE=/620x465/s.glbimg.com/jo/g1/f/original/2016/08/26/arnaldozimmermann.jpg",
-                            "resetKey" : null,
-                            "resetDate" : null
-                          } ]
     }
 
     ngOnInit() {
@@ -104,7 +81,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
 
     private onSuccess(election, headers) {
         this.election = election;
-        //this.candList = this.election.candList
+        this.candList = this.election.candList
         this.isVoted = headers.get('X-jaseesApp-params');
     }
 
