@@ -25,21 +25,11 @@ import 'rxjs/Rx';
     .election-dialog-auto-complete-edit {
             position: absolute; top: 544px; margin-left: 14px; margin-right: 16px; width: 96%;
     }
-    .carousel-item {
-        margin-left: 33%;
-    }
-
-    .span-no-candidate {
-        font-size: 24px;
-        color: #ff0000;
-        margin-left: 33%;
-    }
-
     .span-slide {
-        font-size: 23px;
-        margin-left: 30%;
-        color: black;
-        font-weight: 500;
+      font-size: 15px;
+      position: absolute;
+      bottom: 0px;
+      margin-left: -44%;
     }
 
   `]

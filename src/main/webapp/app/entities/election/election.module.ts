@@ -14,6 +14,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 
 import { SwiperModule } from 'angular2-useful-swiper';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {
     ElectionService,
@@ -47,7 +48,8 @@ const ENTITY_STATES = [
         CarouselModule.forRoot(),
         ChartsModule,
         ClipboardModule,
-        SwiperModule
+        SwiperModule,
+        NgbModule.forRoot()
     ],
     declarations: [
         ElectionComponent,

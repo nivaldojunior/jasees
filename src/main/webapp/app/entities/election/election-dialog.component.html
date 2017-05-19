@@ -94,14 +94,12 @@
         </div>
         <div class="form-group" class="slide-carousel">
             <br/>
-            <span class="span-no-candidate" *ngIf="!users.length">No candidate selected</span>
-
-            <swiper [config]="config" style="background: #eee;" #usefulSwiper>
+            <swiper [config]="config" style="background: #eee; height: 150px" #usefulSwiper>
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" *ngFor="let item of users">
 
-                    <img *ngIf="!item.imageUrl" src="../../../../resources/images/default-user.png" alt="First slide" width="250" height="250" (click)="candidateSelected(item)">
-                      <img *ngIf="item.imageUrl" width="250" height="250" [src]="item.imageUrl" (click)="candidateSelected(item)">
+                    <img *ngIf="!item.imageUrl" src="../../../../resources/images/default-user.png" alt="First slide" width="150" height="150" (click)="candidateSelected(item)">
+                      <img *ngIf="item.imageUrl" width="150" height="150" [src]="item.imageUrl" (click)="candidateSelected(item)">
                       
                       <span class="span-slide">{{item.firstName}}</span>
                     </div>
@@ -124,3 +122,6 @@
 <div class="electionDialogAutoComplete"  [ngClass]="!election.id ? 'election-dialog-auto-complete': 'election-dialog-auto-complete-edit'">
 <ng2-completer id="elect_candidates" [(ngModel)]="selectedUser" [datasource]="dataService" [minSearchLength]="0" [clearSelected]="true" (selected)="onSelected($event)" (keyup)="searchUsers(selectedUser)" class="form-control"></ng2-completer>
 </div>
+
+<!-- <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" [resultTemplate]="rt"
+  [inputFormatter]="formatter" /> -->
