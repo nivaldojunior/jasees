@@ -94,7 +94,7 @@
         </div>
         <div class="form-group" class="slide-carousel">
             <br/>
-            <swiper [config]="config" style="background: #eee; height: 150px" #usefulSwiper>
+            <swiper *ngIf="users && users.length > 0" [config]="config" style="background: #eee; height: 150px" #usefulSwiper>
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" *ngFor="let item of users">
 
