@@ -118,7 +118,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                 electionService.vote(electionId, voteVM).subscribe((result) => {
                     swal({
                         type: 'success',
-                        html: "Your vote is: " + result,
+                        html: "Your vote is: " + result._body,
                         confirmButtonText:
                          '<i class="fa fa-files-o"></i> Copy!'
                     })

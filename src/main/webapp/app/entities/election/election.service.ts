@@ -53,7 +53,7 @@ export class ElectionService {
     vote(electionId: string, voteVM: any): Observable<any> {
         
         return this.http.put(`${this.resourceUrl}/${electionId}/vote`, voteVM).map((res: Response) => {
-            return res.json();
+            return res;
         });
     }
 
