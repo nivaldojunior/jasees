@@ -42,7 +42,7 @@ public class ElectionService {
     }
 
     public String vote(Election election, String user, VoteVM voteVM) {
-        BigInteger result = election.vote(user, voteVM.getCandidate(), voteVM.getBias());
+        BigInteger result = election.vote(voteVM.getCandidate(), user, voteVM.getBias());
         electionRepository.save(election);
         return result.toString();
     }
