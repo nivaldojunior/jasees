@@ -3,15 +3,26 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
 
-    <button (click)="verifyVote()">Verify Vote</button>
-	
-	<canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
+
+    <table class="table table-striped" style="width: 40% !important;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Votes</th>
+          <th>Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of results">
+          <td>{{item.candidate.firstName}}</td>
+          <td>{{item.votes}}</td>
+          <td>
+            <progress-bar [value]="getPercentage(item.votes)" [max]="max" title="{{getPercentage(item.votes)}} %"></progress-bar>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+    <br/>
+    <button type="button" class="btn btn-primary" (click)="verifyVote()">Verify Vote</button>
 
 </div>

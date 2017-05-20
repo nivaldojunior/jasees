@@ -23,6 +23,8 @@ import {
 // ES6 Modules
 import { default as swal } from 'sweetalert2'
 
+
+
 @Component({
     selector: 'jhi-election-result',
     templateUrl: './election-result.component.html'
@@ -32,39 +34,21 @@ export class ElectionResultComponent implements OnInit, OnDestroy {
     electionId;
     election: Election;
     private subscription: any;
+    results: any[];
     
+    public max: number = 0;
+    public showWarning: boolean;
+    public dynamic: number;
+    public type: string;
 
-    public barChartOptions: any = {
-        scaleShowVerticalLines: false,
-        responsive: true
-    };
-    public barChartLabels: string[];
-    public barChartType: string = 'horizontalBar';
-    public barChartLegend: boolean = false;
 
-    public barChartData: any[] = [{
-        data: []
-    }];
-
-    // events
-    public chartClicked(e: any): void {
-        console.log(e);
-    }
-
-        public chartHovered(e: any): void {
-        console.log(e);
-    }
-
-        constructor(
+    constructor(
         private eventManager: EventManager,
         private electionService: ElectionService,
         private route: ActivatedRoute
     ) {}
 
       ngOnInit() {
-        this.barChartLabels = [];
-        this.barChartData[0].data = []
-
         this.subscription = this.route.params.subscribe((params) => {
             this.electionId = params['id']; 
             this.load(params['id']);
@@ -72,21 +56,20 @@ export class ElectionResultComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-
+        let self = this;
         this.electionService.find(id).subscribe((election) => {
             this.election = election;
         });
         this.electionService.results(id).subscribe((election) => {
-            for(let i=0; i < election.length; i++){
-              this.barChartLabels.push(election[i].candidate.firstName);
-              this.barChartData[0].data.push(election[i].votes);
-            }
-
+            self.results = election
+            election.forEach(function(element){
+              self.max += element.votes;
+            })
         });
     }
 
-    loadUsers() {
-
+    getPercentage(value) {
+      return ((value * 100) / this.max).toFixed(2);
     }
 
         previousState() {

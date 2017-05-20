@@ -5,6 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { BrowserModule } from '@angular/platform-browser';
 import { Ng2CompleterModule } from "ng2-completer";
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import {ProgressBarModule} from "ngx-progress-bar";
 
 import { ChartsModule } from 'ng2-charts';
 
@@ -49,7 +50,8 @@ const ENTITY_STATES = [
         ChartsModule,
         ClipboardModule,
         SwiperModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        ProgressBarModule
     ],
     declarations: [
         ElectionComponent,
