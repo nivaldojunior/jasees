@@ -120,8 +120,5 @@
     </div>
 </form>
 <div class="electionDialogAutoComplete"  [ngClass]="!election.id ? 'election-dialog-auto-complete': 'election-dialog-auto-complete-edit'">
-<ng2-completer id="elect_candidates" [(ngModel)]="selectedUser" [datasource]="dataService" [minSearchLength]="0" [clearSelected]="true" (selected)="onSelected($event)" (keyup)="searchUsers(selectedUser)" class="form-control"></ng2-completer>
+<ng2-completer id="elect_candidates" [(ngModel)]="selectedUser" [datasource]="dataService" [minSearchLength]="0" [clearSelected]="true" (selected)="onSelected($event)" (keyup)="searchUsers(selectedUser)" [inputClass]="['form-control']" ></ng2-completer>
 </div>
-
-<!-- <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" [resultTemplate]="rt"
-  [inputFormatter]="formatter" /> -->
