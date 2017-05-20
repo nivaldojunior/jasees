@@ -76,16 +76,16 @@
                     <div class="col-md-2">
                         
                     </div>
-                    <div class="col-md-2 color-time">
+                    <div class="col-md-2" [ngClass]="{'color-time-notstarted': item.type === 'INITIATED', 'color-time-iniated': item.type === 'NOT_STARTED'}">
                         <div class="card-time">{{item.days}}</div> days
                     </div>
-                    <div class="col-md-2 color-time">
+                    <div class="col-md-2" [ngClass]="{'color-time-notstarted': item.type === 'INITIATED', 'color-time-iniated': item.type === 'NOT_STARTED'}">
                         <div class="card-time">{{item.hours}}</div> hour
                     </div>
-                    <div class="col-md-2 color-time">
+                    <div class="col-md-2" [ngClass]="{'color-time-notstarted': item.type === 'INITIATED', 'color-time-iniated': item.type === 'NOT_STARTED'}">
                         <div class="card-time">{{item.minutes}}</div> minutes
                     </div>
-                    <div class="col-md-2 color-time">
+                    <div class="col-md-2" [ngClass]="{'color-time-notstarted': item.type === 'INITIATED', 'color-time-iniated': item.type === 'NOT_STARTED'}">
                         <div class="card-time">{{item.seconds}}</div> seconds
                     </div>
                 </div>
@@ -124,7 +124,7 @@
         font-size: 30px;
         margin-top: 30px;
     }
-    .color-time {
+    .color-time-notstarted {
         background: #DC143C;
         color: white;
         font-weight: 900;
@@ -132,4 +132,10 @@
     .card-time {
         font-size: 30px;
     }
+    .color-time-iniated {
+        background: #0275d8;
+        color: white;
+        font-weight: 900;
+    }
+
 </style>
