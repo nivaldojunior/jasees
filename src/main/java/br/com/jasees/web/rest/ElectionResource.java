@@ -29,7 +29,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -111,9 +110,7 @@ public class ElectionResource {
         @RequestParam(value = "filter", required = false, defaultValue = "none") String filter,
         @ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Elections");
-
         Page<Election> page = electionService.getElections(pageable, filter);
-
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/elections");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

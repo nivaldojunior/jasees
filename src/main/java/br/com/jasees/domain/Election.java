@@ -89,12 +89,22 @@ public class Election extends AbstractAuditingEntity implements Serializable {
         return name;
     }
 
+    public Election name(String name) {
+        this.name = name;
+        return this;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public String getDesc() {
         return desc;
+    }
+
+    public Election desc(String desc) {
+        this.desc = desc;
+        return this;
     }
 
     public void setDesc(String desc) {
@@ -105,12 +115,22 @@ public class Election extends AbstractAuditingEntity implements Serializable {
         return initDate;
     }
 
+    public Election initDate(ZonedDateTime initDate) {
+        this.initDate = initDate;
+        return this;
+    }
+
     public void setInitDate(ZonedDateTime initDate) {
         this.initDate = initDate;
     }
 
     public ZonedDateTime getEndDate() {
         return endDate;
+    }
+
+    public Election endDate(ZonedDateTime endDate) {
+        this.endDate = endDate;
+        return this;
     }
 
     public void setEndDate(ZonedDateTime endDate) {
@@ -126,7 +146,7 @@ public class Election extends AbstractAuditingEntity implements Serializable {
     }
 
     public Integer ifVoted(String user) {
-        return !votedList.containsKey(user) ? 0 : votedList.get(user);
+        return votedList.getOrDefault(user, 0);
     }
 
     private BigInteger generatePrimeNumber() {
@@ -194,24 +214,26 @@ public class Election extends AbstractAuditingEntity implements Serializable {
             return false;
         }
         Election election = (Election) o;
-        return !(election.id == null || id == null) && Objects.equals(id, election.id);
+        if (election.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), election.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(getId());
     }
 
     @Override
     public String toString() {
         return "Election{" +
-            "id='" + id + '\'' +
-            ", name='" + name + '\'' +
-            ", desc='" + desc + '\'' +
-            ", initDate=" + initDate +
-            ", endDate=" + endDate +
-            ", candList=" + candList +
-            '}';
+            "id=" + getId() +
+            ", name='" + getName() + "'" +
+            ", desc='" + getDesc() + "'" +
+            ", initDate='" + getInitDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
+            ", candList='" + getCandList() + "'" +
+            "}";
     }
-
 }

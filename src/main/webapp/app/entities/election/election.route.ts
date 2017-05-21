@@ -12,94 +12,90 @@ import { ElectionDeletePopupComponent } from './election-delete-dialog.component
 import { ElectionResultComponent } from './election-result.component';
 import { ElectionCandidateElectComponent } from './election-candidate-elect.component';
 
-
-
-import { Principal } from '../../shared';
-
 @Injectable()
 export class ElectionResolvePagingParams implements Resolve<any> {
 
-  constructor(private paginationUtil: PaginationUtil) {}
+    constructor(private paginationUtil: PaginationUtil) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
-      const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
-      return {
-          page: this.paginationUtil.parsePage(page),
-          predicate: this.paginationUtil.parsePredicate(sort),
-          ascending: this.paginationUtil.parseAscending(sort)
-    };
-  }
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        const page = route.queryParams['page'] ? route.queryParams['page'] : '1';
+        const sort = route.queryParams['sort'] ? route.queryParams['sort'] : 'id,asc';
+        return {
+            page: this.paginationUtil.parsePage(page),
+            predicate: this.paginationUtil.parsePredicate(sort),
+            ascending: this.paginationUtil.parseAscending(sort)
+      };
+    }
 }
 
 export const electionRoute: Routes = [
-  {
-    path: 'election',
-    component: ElectionComponent,
-    resolve: {
-      'pagingParams': ElectionResolvePagingParams
-    },
-    data: {
-        authorities: ['ROLE_USER'],
-        pageTitle: 'Elections'
-    },
-    canActivate: [UserRouteAccessService]
-  }, {
-    path: 'election/:id',
-    component: ElectionDetailComponent,
-    data: {
-        authorities: ['ROLE_USER'],
-        pageTitle: 'Elections'
-    },
-    canActivate: [UserRouteAccessService]
-  }, {
-    path: 'election-result/:id',
-    component: ElectionResultComponent,
-    data: {
-        authorities: ['ROLE_USER'],
-        pageTitle: 'Elections'
-    },
-    canActivate: [UserRouteAccessService]
-  }, {
-    path: 'election-vote/:id',
-    component: ElectionCandidateElectComponent,
-    data: {
-        authorities: ['ROLE_USER'],
-        pageTitle: 'Elections'
-    },
-    canActivate: [UserRouteAccessService]
-  }
+    {
+        path: 'election',
+        component: ElectionComponent,
+        resolve: {
+            'pagingParams': ElectionResolvePagingParams
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Elections'
+        },
+        canActivate: [UserRouteAccessService]
+    }, {
+        path: 'election/:id',
+        component: ElectionDetailComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Elections'
+        },
+        canActivate: [UserRouteAccessService]
+    }, {
+        path: 'election-result/:id',
+        component: ElectionResultComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Elections'
+        },
+        canActivate: [UserRouteAccessService]
+    }, {
+        path: 'election-vote/:id',
+        component: ElectionCandidateElectComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Elections'
+        },
+        canActivate: [UserRouteAccessService]
+    }
 ];
 
 export const electionPopupRoute: Routes = [
-  {
-    path: 'election-new',
-    component: ElectionPopupComponent,
-    data: {
-        authorities: ['ROLE_USER'],
-        pageTitle: 'Elections'
+    {
+        path: 'election-new',
+        component: ElectionPopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Elections'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
     },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  },
-  {
-    path: 'election/:id/edit',
-    component: ElectionPopupComponent,
-    data: {
-        authorities: ['ROLE_USER'],
-        pageTitle: 'Elections'
+    {
+        path: 'election/:id/edit',
+        component: ElectionPopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Elections'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
     },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  },
-  {
-    path: 'election/:id/delete',
-    component: ElectionDeletePopupComponent,
-    data: {
-        authorities: ['ROLE_USER'],
-        pageTitle: 'Elections'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
+    {
+        path: 'election/:id/delete',
+        component: ElectionDeletePopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Elections'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    }
 ];

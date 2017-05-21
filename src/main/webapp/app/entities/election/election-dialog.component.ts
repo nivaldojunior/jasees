@@ -1,17 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager, AlertService } from 'ng-jhipster';
+import {NgbActiveModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {EventManager, AlertService} from 'ng-jhipster';
 
-import { Election } from './election.model';
-import { ElectionPopupService } from './election-popup.service';
-import { ElectionService } from './election.service';
+import {Election} from './election.model';
+import {ElectionPopupService} from './election-popup.service';
+import {ElectionService} from './election.service';
 
-import { User, UserService } from '../../shared';
+import {User, UserService} from '../../shared';
 
-import { CompleterService, CompleterData } from 'ng2-completer';
+import {CompleterService, CompleterData} from 'ng2-completer';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -53,34 +53,28 @@ export class ElectionDialogComponent implements OnInit {
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev'
     };
-    
-    constructor(
-        public activeModal: NgbActiveModal,
-        private alertService: AlertService,
-        private electionService: ElectionService,
-        private eventManager: EventManager,
-        private userService: UserService,
-        private completerService: CompleterService
-    ) {
+
+    constructor(public activeModal: NgbActiveModal,
+                private alertService: AlertService,
+                private electionService: ElectionService,
+                private eventManager: EventManager,
+                private userService: UserService,
+                private completerService: CompleterService) {
         this.dataService = completerService.local([], 'firstName', 'firstName');
         this.users = [];
     }
 
     ngOnInit() {
         this.isSaving = false;
-        this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        
+        this.authorities = ['ROLE_ADMIN'];
     }
+
     clear() {
         this.activeModal.dismiss('cancel');
     }
 
     save() {
         this.isSaving = true;
-        //let candList = []
-        // this.users.forEach(function(element){
-        //     candList.push(element.id);
-        // })
         this.election.candList = this.users;
         if (this.election.id !== undefined) {
             this.electionService.update(this.election)
@@ -94,7 +88,7 @@ export class ElectionDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: Election) {
-        this.eventManager.broadcast({ name: 'electionListModification', content: 'OK'});
+        this.eventManager.broadcast({name: 'electionListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -108,8 +102,9 @@ export class ElectionDialogComponent implements OnInit {
         this.isSaving = false;
         this.onError(error);
     }
+
     private onError(error) {
-        this.alertService.error(error.error, error.message, null);
+        this.alertService.error(error.message, null, null);
     }
 
     searchUsers(keyword) {
@@ -118,35 +113,34 @@ export class ElectionDialogComponent implements OnInit {
         }
     }
 
-    onSelected (userSelected) {
-        if(userSelected){
+    onSelected(userSelected) {
+        if (userSelected) {
             let bool = true;
-            for(let i=0; i < this.users.length; i++){
-                if(this.users[i].id === userSelected.originalObject.id){
-                    bool= false;
+            for (let i = 0; i < this.users.length; i++) {
+                if (this.users[i].id === userSelected.originalObject.id) {
+                    bool = false;
                     break;
                 }
             }
-            if(bool){
-                this.users.push(userSelected.originalObject)
+            if (bool) {
+                this.users.push(userSelected.originalObject);
             }
         }
     }
 
-    candidateSelected (userSelected) {
-        for(let i=0; i < this.users.length; i++){
-            if(this.users[i].id === userSelected.id){
-                this.users.splice(i,1);
+    candidateSelected(userSelected) {
+        for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i].id === userSelected.id) {
+                this.users.splice(i, 1);
                 break;
             }
         }
     }
 
-    onSuccess (response) {
-        let timedRes = Observable.from([response]);
+    onSuccess(response) {
+        const timedRes = Observable.from([response]);
         this.dataService = this.completerService.local(timedRes, 'firstName', 'firstName');
     }
-
 }
 
 @Component({
@@ -158,14 +152,13 @@ export class ElectionPopupComponent implements OnInit, OnDestroy {
     modalRef: NgbModalRef;
     routeSub: any;
 
-    constructor(
-        private route: ActivatedRoute,
-        private electionPopupService: ElectionPopupService
-    ) {}
+    constructor(private route: ActivatedRoute,
+                private electionPopupService: ElectionPopupService) {
+    }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.modalRef = this.electionPopupService
                     .open(ElectionDialogComponent, params['id']);
             } else {

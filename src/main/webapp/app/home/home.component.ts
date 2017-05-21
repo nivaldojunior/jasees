@@ -1,19 +1,8 @@
-import {
-    Component,
-    OnInit
-} from '@angular/core';
-import {
-    NgbModalRef
-} from '@ng-bootstrap/ng-bootstrap';
-import {
-    EventManager
-} from 'ng-jhipster';
+import { Component, OnInit } from '@angular/core';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { EventManager } from 'ng-jhipster';
 
-import {
-    Account,
-    LoginModalService,
-    Principal
-} from '../shared';
+import { Account, LoginModalService, Principal } from '../shared';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Response } from '@angular/http';
@@ -25,18 +14,17 @@ import { ElectionService } from '../entities/election/election.service';
     styleUrls: [
         'home.scss'
     ]
-
 })
 export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
 
-    elections = []
-    bkpElections = []
+    elections = [];
+    bkpElections = [];
     filter: string;
 
     error: any;
-    success: any;    
+    success: any;
     routeData: any;
     links: any;
     totalItems: any;
@@ -69,22 +57,19 @@ export class HomeComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
-        //this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
-        // this.page = pagingParams.page;
         this.bkpElections = data;
         this.elections = data;
         setInterval(() => {
             for (let i = 0; i < this.bkpElections.length; i++) {
-                this.calculeTime(this.bkpElections[i]);
+                this.calculateTime(this.bkpElections[i]);
             }
-        }, 1000);
+        }, 500);
     }
 
     private onError(error) {
         this.bkpElections = [];
-        //this.alertService.error(error.message, null, null);
     }
 
     ngOnInit() {
@@ -112,32 +97,31 @@ export class HomeComponent implements OnInit {
         this.modalRef = this.loginModalService.open();
     }
 
-
     compareDate(date1, date2) {
         let seconds = Math.floor((date2 - (date1)) / 1000);
         let minutes = Math.floor(seconds / 60);
         let hours = Math.floor(minutes / 60);
-        let days = Math.floor(hours / 24);
+        const days = Math.floor(hours / 24);
 
         hours = hours - (days * 24);
         minutes = minutes - (days * 24 * 60) - (hours * 60);
         seconds = seconds - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
 
         return {
-            days: days,
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds
+            days,
+            hours,
+            minutes,
+            seconds
         };
     };
 
-    calculeTime(item) {
-        
-        let now = new Date();
-        let initDate = item.initDate;
-        let endDate = item.endDate;
+    calculateTime(item) {
 
-        let type = "";
+        const now = new Date();
+        const initDate = item.initDate;
+        const endDate = item.endDate;
+
+        let type = '';
         let result = {
             days: 0,
             hours: 0,
@@ -146,13 +130,13 @@ export class HomeComponent implements OnInit {
         };
 
         if (endDate.getTime() - now.getTime() <= 0) {
-            type = "FINALIZED";
+            type = 'FINALIZED';
         } else {
             if (initDate.getTime() - now.getTime() >= 0) {
-                type = "NOT_STARTED"
+                type = 'NOT_STARTED';
                 result = this.compareDate(now, initDate);
             } else {
-                type = "INITIATED";
+                type = 'INITIATED';
                 result = this.compareDate(now, endDate);
             }
         }
@@ -165,9 +149,9 @@ export class HomeComponent implements OnInit {
 
     itemSelected(item) {
         if (item.type === 'NOT_STARTED' || item.type === 'INITIATED') {
-            this.router.navigate(['/election-vote/'+item.id]);
+            this.router.navigate(['/election-vote/' + item.id]);
         } else {
-            this.router.navigate(['/election-result/'+item.id]);
+            this.router.navigate(['/election-result/' + item.id]);
         }
 
     }
@@ -178,15 +162,15 @@ export class HomeComponent implements OnInit {
             this.elections = this.bkpElections;
         }
         if (type !== 'ALL') {
-            let tmp = this.elections.length >= this.bkpElections.length ? [] : this.elections;
+            const tmp = this.elections.length >= this.bkpElections.length ? [] : this.elections;
             if (flag) {
                 this.bkpElections.forEach(function(element) {
                     if (element.type === type) {
                         tmp.push(element);
                     }
-                })
+                });
             } else {
-                for (var i = 0; i < tmp.length; i++) {
+                for (let i = 0; i < tmp.length; i++) {
                     if (tmp[i].type === type) {
                         tmp.splice(i, 1);
                         i = -1;

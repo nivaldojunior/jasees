@@ -112,9 +112,9 @@
   dependencies:
     tsickle "^0.21.0"
 
-"@ng-bootstrap/ng-bootstrap@^1.0.0-alpha.23":
-  version "1.0.0-alpha.26"
-  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-1.0.0-alpha.26.tgz#f3d9e16b5682ec20edb3f1397d3d45a576f3f6a4"
+"@ng-bootstrap/ng-bootstrap@1.0.0-alpha.23":
+  version "1.0.0-alpha.23"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-1.0.0-alpha.23.tgz#14eb380c99dc21a49be8b9cc892ee4161d7801af"
 
 "@ngtools/json-schema@1.0.5":
   version "1.0.5"
@@ -226,10 +226,6 @@ angular2-bootstrap@^0.2.1:
 angular2-cookie@1.2.6:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/angular2-cookie/-/angular2-cookie-1.2.6.tgz#8fa845531e777adb042fe2f339c0040f6ddbf09d"
-
-angular2-infinite-scroll@0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/angular2-infinite-scroll/-/angular2-infinite-scroll-0.3.4.tgz#d011ab7dc7a85a2ca908540166b679a68d396f53"
 
 angular2-template-loader@0.6.2:
   version "0.6.2"
@@ -639,7 +635,7 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap@^4.0.0-alpha.6:
+bootstrap@4.0.0-alpha.6:
   version "4.0.0-alpha.6"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-alpha.6.tgz#4f54dd33ac0deac3b28407bc2df7ec608869c9c8"
   dependencies:
@@ -1204,7 +1200,7 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.9.x, commander@^2.2.0, commander@^2.5.0, commander@^2.9.0:
+commander@2.9.0, commander@2.9.x, commander@^2.2.0, commander@^2.5.0, commander@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
   dependencies:
@@ -1806,6 +1802,10 @@ dev-ip@^1.0.1:
 di@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/di/-/di-0.0.1.tgz#806649326ceaa7caa3306d75d985ea2748ba913c"
+
+didyoumean@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/didyoumean/-/didyoumean-1.2.1.tgz#e92edfdada6537d484d73c0172fd1eba0c4976ff"
 
 diff@^2.1.2:
   version "2.2.3"
@@ -2720,17 +2720,19 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-generator-jhipster@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/generator-jhipster/-/generator-jhipster-4.3.0.tgz#2538007c235446ed73f1a729d25ae2619398ce1b"
+generator-jhipster@4.5.1:
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/generator-jhipster/-/generator-jhipster-4.5.1.tgz#ff0a3b31d961e2ad92c11e3ce8c5479604172701"
   dependencies:
     chalk "1.1.3"
     cheerio "0.22.0"
+    commander "2.9.0"
+    didyoumean "1.2.1"
     ejs "2.5.6"
     glob "7.1.1"
     html-wiring "1.2.0"
     insight "0.8.4"
-    jhipster-core "1.2.9"
+    jhipster-core "1.3.2"
     js-yaml "3.8.3"
     lodash "4.17.4"
     mkdirp "0.5.1"
@@ -2738,6 +2740,8 @@ generator-jhipster@4.3.0:
     randexp "0.4.5"
     semver "5.3.0"
     shelljs "0.7.7"
+    tabtab "2.2.2"
+    yeoman-environment "1.6.6"
     yeoman-generator "1.1.1"
     yo "1.8.5"
 
@@ -3721,9 +3725,9 @@ jasmine-core@2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.5.2.tgz#6f61bd79061e27f43e6f9355e44b3c6cab6ff297"
 
-jhipster-core@1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/jhipster-core/-/jhipster-core-1.2.9.tgz#f6ab3eda8f2dbae2a593ce6af51b5ed23a45cb88"
+jhipster-core@1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/jhipster-core/-/jhipster-core-1.3.2.tgz#5b2675c7682be098b1238760474a32657905bdae"
   dependencies:
     lodash "4.17.4"
 
@@ -4173,6 +4177,10 @@ lodash.defaults@^4.0.1:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
 
+lodash.difference@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.difference/-/lodash.difference-4.5.0.tgz#9ccb4e505d486b91651345772885a2df27fd017c"
+
 lodash.escape@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/lodash.escape/-/lodash.escape-3.2.0.tgz#995ee0dc18c1b48cc92effae71a10aab5b487698"
@@ -4596,9 +4604,9 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-ng-jhipster@0.1.12:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/ng-jhipster/-/ng-jhipster-0.1.12.tgz#22e2323baddb207a85b98443fd4842766cce6e81"
+ng-jhipster@0.1.14:
+  version "0.1.14"
+  resolved "https://registry.yarnpkg.com/ng-jhipster/-/ng-jhipster-0.1.14.tgz#41996b7ea26e2dde75b8273fbed999374048d402"
   dependencies:
     ng2-translate "4.2.0"
 
@@ -4631,6 +4639,10 @@ ngx-clipboard@^8.0.2:
   resolved "https://registry.yarnpkg.com/ngx-clipboard/-/ngx-clipboard-8.0.2.tgz#0fbc17e952a9fec2b32b4b684c2c9dd3f89bad54"
   dependencies:
     ngx-window-token "0.0.2"
+
+ngx-infinite-scroll@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-0.4.1.tgz#1f0b0038400e34aa71d34c3ebbef7bace6155a3f"
 
 ngx-progress-bar@0.0.10:
   version "0.0.10"
@@ -5783,7 +5795,7 @@ readable-stream@1.1, readable-stream@~1.1.9:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.6:
+readable-stream@^2.0.0, "readable-stream@^2.0.0 || ^1.1.13", readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.1.4, readable-stream@^2.2.6:
   version "2.2.9"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.2.9.tgz#cf78ec6f4a6d1eb43d26488cac97f042e74b7fc8"
   dependencies:
@@ -5975,7 +5987,7 @@ request-progress@~2.0.1:
   dependencies:
     throttleit "^1.0.0"
 
-request@2, request@^2.40.0, request@^2.61.0, request@^2.72.0, request@^2.74.0, request@~2.79.0:
+request@2, request@^2.61.0, request@^2.72.0, request@~2.79.0:
   version "2.79.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.79.0.tgz#4dfe5bf6be8b8cdc37fcf93e04b65577722710de"
   dependencies:
@@ -6025,7 +6037,7 @@ request@2.78.0:
     tough-cookie "~2.3.0"
     tunnel-agent "~0.4.1"
 
-request@^2.81.0:
+request@^2.40.0, request@^2.74.0, request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -6832,6 +6844,19 @@ symbol-observable@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
 
+tabtab@2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/tabtab/-/tabtab-2.2.2.tgz#7a047f143b010b4cbd31f857e82961512cbf4e14"
+  dependencies:
+    debug "^2.2.0"
+    inquirer "^1.0.2"
+    lodash.difference "^4.5.0"
+    lodash.uniq "^4.5.0"
+    minimist "^1.2.0"
+    mkdirp "^0.5.1"
+    npmlog "^2.0.3"
+    object-assign "^4.1.0"
+
 tabtab@^1.3.0:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/tabtab/-/tabtab-1.3.2.tgz#bb9c2ca6324f659fde7634c2caf3c096e1187ca7"
@@ -6911,19 +6936,12 @@ throttleit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/throttleit/-/throttleit-1.0.0.tgz#9e785836daf46743145a5984b6268d828528ac6c"
 
-through2@2.0.1:
+through2@2.0.1, through2@^2.0.0, through2@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.1.tgz#384e75314d49f32de12eebb8136b8eb6b5d59da9"
   dependencies:
     readable-stream "~2.0.0"
     xtend "~4.0.0"
-
-through2@^2.0.0, through2@^2.0.1:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
-  dependencies:
-    readable-stream "^2.1.5"
-    xtend "~4.0.1"
 
 through@2, through@X.X.X, through@^2.3.6, through@~2.3, through@~2.3.1, through@~2.3.4, through@~2.3.6:
   version "2.3.8"
@@ -7681,7 +7699,7 @@ xmlhttprequest-ssl@1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/xmlhttprequest-ssl/-/xmlhttprequest-ssl-1.5.3.tgz#185a888c04eca46c3e4070d99f7b49de3528992d"
 
-xtend@^4.0.0, xtend@~4.0.0, xtend@~4.0.1:
+xtend@^4.0.0, xtend@~4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
 
@@ -7811,7 +7829,7 @@ yeoman-doctor@^2.0.0:
     twig "^0.8.2"
     user-home "^2.0.0"
 
-yeoman-environment@^1.1.0, yeoman-environment@^1.6.1:
+yeoman-environment@1.6.6, yeoman-environment@^1.1.0, yeoman-environment@^1.6.1:
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/yeoman-environment/-/yeoman-environment-1.6.6.tgz#cd85fa67d156060e440d7807d7ef7cf0d2d1d671"
   dependencies:

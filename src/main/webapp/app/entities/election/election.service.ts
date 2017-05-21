@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { Election } from './election.model';
 import { DateUtils } from 'ng-jhipster';
+
 @Injectable()
 export class ElectionService {
 
@@ -12,7 +13,7 @@ export class ElectionService {
     constructor(private http: Http, private dateUtils: DateUtils) { }
 
     create(election: Election): Observable<Election> {
-        const copy: Election = Object.assign({}, election);
+        const copy = this.convert(election);
         copy.initDate = this.dateUtils.toDate(election.initDate);
         copy.endDate = this.dateUtils.toDate(election.endDate);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
@@ -21,10 +22,8 @@ export class ElectionService {
     }
 
     update(election: Election): Observable<Election> {
-        const copy: Election = Object.assign({}, election);
-
+        const copy = this.convert(election);
         copy.initDate = this.dateUtils.toDate(election.initDate);
-
         copy.endDate = this.dateUtils.toDate(election.endDate);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
@@ -32,14 +31,20 @@ export class ElectionService {
     }
 
     find(id: number): Observable<Election> {
-        return this.http.get(`${this.resourceUrl}/${id}`)
-        .map((res: any) => this.convertResponse(res));
+        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+            const jsonResponse = res.json();
+            jsonResponse.initDate = this.dateUtils
+                .convertDateTimeFromServer(jsonResponse.initDate);
+            jsonResponse.endDate = this.dateUtils
+                .convertDateTimeFromServer(jsonResponse.endDate);
+            return jsonResponse;
+        });
     }
 
     query(req?: any): Observable<Response> {
         const options = this.createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
-            .map((res: any) => this.convertResponse(res))
+            .map((res: Response) => this.convertResponse(res))
         ;
     }
 
@@ -51,7 +56,7 @@ export class ElectionService {
     }
 
     vote(electionId: string, voteVM: any): Observable<any> {
-        
+
         return this.http.put(`${this.resourceUrl}/${electionId}/vote`, voteVM).map((res: Response) => {
             return res;
         });
@@ -67,7 +72,7 @@ export class ElectionService {
         return this.http.delete(`${this.resourceUrl}/${id}`);
     }
 
-    private convertResponse(res: any): any {
+    private convertResponse(res: Response): Response {
         const jsonResponse = res.json();
         for (let i = 0; i < jsonResponse.length; i++) {
             jsonResponse[i].initDate = this.dateUtils
@@ -75,7 +80,7 @@ export class ElectionService {
             jsonResponse[i].endDate = this.dateUtils
                 .convertDateTimeFromServer(jsonResponse[i].endDate);
         }
-        res._body = jsonResponse;
+        res.json().data = jsonResponse;
         return res;
     }
 
@@ -93,5 +98,14 @@ export class ElectionService {
             options.search = params;
         }
         return options;
+    }
+
+    private convert(election: Election): Election {
+        const copy: Election = Object.assign({}, election);
+
+        copy.initDate = this.dateUtils.toDate(election.initDate);
+
+        copy.endDate = this.dateUtils.toDate(election.endDate);
+        return copy;
     }
 }

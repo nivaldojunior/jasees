@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventManager, PaginationUtil, ParseLinks, AlertService} from 'ng-jhipster';
+import { EventManager, PaginationUtil, ParseLinks, AlertService } from 'ng-jhipster';
 
 import { ITEMS_PER_PAGE, Principal, User, UserService } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
@@ -44,7 +44,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
         });
-        }
+    }
 
     ngOnInit() {
         this.principal.identity().then((account) => {

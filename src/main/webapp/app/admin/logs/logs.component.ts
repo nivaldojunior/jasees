@@ -20,7 +20,7 @@ export class LogsComponent implements OnInit {
         this.filter = '';
         this.orderProp = 'name';
         this.reverse = false;
-        }
+    }
 
     ngOnInit() {
         this.logsService.findAll().subscribe((loggers) => this.loggers = loggers);

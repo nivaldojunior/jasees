@@ -19,7 +19,7 @@ export class SessionsComponent implements OnInit {
         private sessionsService: SessionsService,
         private principal: Principal
     ) {
-        }
+    }
 
     ngOnInit() {
         this.sessionsService.findAll().subscribe((sessions) => this.sessions = sessions);

@@ -15,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.*;
 
 /**
@@ -69,11 +69,11 @@ public class ElectionService {
 
     public Page<Election> getElections(Pageable pageable, String filter) {
         if (filter.equals("finished")) {
-            return electionRepository.findAllByEndDateBefore(pageable, ZonedDateTime.now());
+            return electionRepository.findAllByEndDateBefore(pageable, Instant.now());
         } else if (filter.equals("inprogress")) {
-            return electionRepository.findAllByInitDateBeforeAndEndDateAfter(pageable, ZonedDateTime.now(), ZonedDateTime.now());
+            return electionRepository.findAllByInitDateBeforeAndEndDateAfter(pageable, Instant.now(), Instant.now());
         } else if (filter.equals("notstarted")) {
-            return electionRepository.findAllByInitDateAfter(pageable, ZonedDateTime.now());
+            return electionRepository.findAllByInitDateAfter(pageable, Instant.now());
         } else {
             return electionRepository.findAll(pageable);
         }

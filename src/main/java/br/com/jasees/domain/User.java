@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 /**
  * A user.
@@ -70,10 +70,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Size(max = 20)
     @Field("reset_key")
+    @JsonIgnore
     private String resetKey;
 
     @Field("reset_date")
-    private ZonedDateTime resetDate = null;
+    private Instant resetDate = null;
 
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
@@ -159,11 +160,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.resetKey = resetKey;
     }
 
-    public ZonedDateTime getResetDate() {
+    public Instant getResetDate() {
        return resetDate;
     }
 
-    public void setResetDate(ZonedDateTime resetDate) {
+    public void setResetDate(Instant resetDate) {
        this.resetDate = resetDate;
     }
 
@@ -209,10 +210,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
-            ", activated=" + activated +
-            ", langKey='" + langKey + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
+            ", activated='" + activated + '\'' +
+            ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
-            '}';
+            "}";
     }
 }
