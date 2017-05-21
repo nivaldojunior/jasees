@@ -93,7 +93,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                         html: 'Your vote is: ' + result._body,
                         confirmButtonText: '<i class="fa fa-files-o"></i> Copy!'
                     });
-                    self.isVoted = self.isVoted ==0 0 ? 1 : 2;
+                    self.isVoted = self.isVoted == 0 ? 1 : 2;
                 });
 
             });
