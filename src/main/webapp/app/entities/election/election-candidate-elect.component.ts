@@ -110,7 +110,6 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, Vote it!'
             }).then(function(x) {
-                console.log(this)
                 let voteVM = {
                     "bias": self.isVoted == 0 ? true : false,
                     "candidate": userSelected.id

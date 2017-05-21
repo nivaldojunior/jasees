@@ -7,8 +7,6 @@ import { Ng2CompleterModule } from "ng2-completer";
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import {ProgressBarModule} from "ngx-progress-bar";
 
-import { ChartsModule } from 'ng2-charts';
-
 import { JaseesSharedModule } from '../../shared';
 
 import { ClipboardModule } from 'ngx-clipboard';
@@ -47,7 +45,6 @@ const ENTITY_STATES = [
         Ng2CompleterModule,
         FormsModule,
         CarouselModule.forRoot(),
-        ChartsModule,
         ClipboardModule,
         SwiperModule,
         NgbModule.forRoot(),
