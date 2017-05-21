@@ -118,8 +118,8 @@ export class HomeComponent implements OnInit {
     calculateTime(item) {
 
         const now = new Date();
-        const initDate = item.initDate;
-        const endDate = item.endDate;
+        const initDate = new Date(item.initDate);
+        const endDate = new Date(item.endDate);
 
         let type = '';
         let result = {
