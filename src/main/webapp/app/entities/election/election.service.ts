@@ -37,7 +37,8 @@ export class ElectionService {
                 .convertDateTimeFromServer(jsonResponse.initDate);
             jsonResponse.endDate = this.dateUtils
                 .convertDateTimeFromServer(jsonResponse.endDate);
-            return jsonResponse;
+            res.json().data = jsonResponse;
+            return res;
         });
     }
 
