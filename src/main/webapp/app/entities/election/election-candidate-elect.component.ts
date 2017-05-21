@@ -59,7 +59,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
     private onSuccess(election, headers) {
         this.election = election;
         this.candList = this.election.candList;
-        this.isVoted = headers.get('X-jaseesApp-params');
+        this.isVoted = parseInt(headers.get('X-jaseesApp-params'));
     }
 
     private onError(error) {
@@ -84,7 +84,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                 confirmButtonText: 'Yes, Vote it!'
             }).then(function(x) {
                 const voteVM = {
-                    'bias': self.isVoted == 0 ? true : false,
+                    'bias': self.isVoted === 0 ? true : false,
                     'candidate': userSelected.id
                 }
                 electionService.vote(electionId, voteVM).subscribe((result) => {
@@ -93,7 +93,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                         html: 'Your vote is: ' + result._body,
                         confirmButtonText: '<i class="fa fa-files-o"></i> Copy!'
                     });
-                    self.isVoted = self.isVoted == 0 ? 1 : 2;
+                    self.isVoted = self.isVoted === 0 ? 1 : 2;
                 });
 
             });
