@@ -17,6 +17,18 @@ export class ElectionDetailComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private eventSubscriber: Subscription;
 
+    config: Object = {
+        pagination: '.swiper-pagination',
+        slidesPerView: 3,
+        paginationClickable: true,
+        spaceBetween: 30,
+        freeMode: true,
+        centeredSlides: true,
+        keyboardControl: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev'
+    };
+
     constructor(
         private eventManager: EventManager,
         private electionService: ElectionService,
