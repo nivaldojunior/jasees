@@ -51,7 +51,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
     private onSuccess(election, headers) {
         this.election = election;
         this.candList = this.election.candList;
-        this.isVoted = headers.get('X-jaseesApp-params');
+        this.isVoted = parseInt(headers.get('X-jaseesApp-params'));
     }
 
     private onError(error) {

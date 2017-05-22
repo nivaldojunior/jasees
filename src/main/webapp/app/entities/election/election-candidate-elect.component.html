@@ -5,7 +5,9 @@
 
     <h2><span class="description">{{election.desc}}</span></h2>
     <br/>
-    <swiper [config]="config" [ngClass]="isVoted === 0 ? 'swiper-border-true': 'swiper-border-false'" style="background: #eee;" #usefulSwiper>
+    IsVoted: {{isVoted}}
+
+    <swiper [config]="config" [ngClass]="{'swiper-border-true': isVoted == 0, 'swiper-border-false': isVoted == 1 }" style="background: #eee;" #usefulSwiper>
         <div class="swiper-wrapper" >
             <div class="swiper-slide" *ngFor="let item of candList">
               <img *ngIf="!item.imageUrl" src="../../../../resources/images/default-user.png" alt="First slide" width="250" height="250" (click)="candidateSelected(item)">

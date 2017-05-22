@@ -35,6 +35,10 @@ export class HomeComponent implements OnInit {
     previousPage: any;
     reverse: any;
 
+    private flag_started = false;
+    private flag_initiated = false;
+    private flag_finalized = false;
+
     constructor(
         private loginModalService: LoginModalService,
         private electionService: ElectionService,
@@ -138,10 +142,21 @@ export class HomeComponent implements OnInit {
 
     searchByCheckbox(type, flag) {
 
-        if (type === 'ALL' && flag) {
-            this.elections = this.bkpElections;
+        if(type === 'INITIATED'){
+            this.flag_initiated = flag
         }
-        if (type !== 'ALL') {
+
+        if(type === 'NOT_STARTED' ){
+            this.flag_started = flag
+        }
+
+        if(type === 'FINALIZED' ){
+            this.flag_finalized = flag        
+        }
+
+        if (!this.flag_initiated && !this.flag_started && !this.flag_initiated) {
+            this.elections = this.bkpElections;
+        }else{
             const tmp = this.elections.length >= this.bkpElections.length ? [] : this.elections;
             if (flag) {
                 this.bkpElections.forEach(function(element) {
@@ -159,6 +174,7 @@ export class HomeComponent implements OnInit {
             }
             this.elections = tmp;
         }
+        
     }
 
     sort() {
