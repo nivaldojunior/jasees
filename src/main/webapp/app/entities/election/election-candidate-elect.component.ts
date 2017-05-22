@@ -71,8 +71,13 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
         if (self.isVoted <= 1) {
             const electionId = this.election.id;
             const electionService = this.electionService;
+            let msg;
+            if(self.isVoted === 0)
+                msg = '<small>Vote is true </small><br/>Are you sure?';
+            else
+                msg = '<small>Vote is false </small><br/>Are you sure?';
             swal({
-                title: 'Are you sure?',
+                title: msg,
                 text: 'Your candidate selected is: ' + userSelected.firstName,
                 imageUrl: userSelected.imageUrl,
                 imageWidth: 300,
