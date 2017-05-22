@@ -1,8 +1,8 @@
 package br.com.jasees.web.rest.vm;
 
 import br.com.jasees.service.dto.UserDTO;
-
 import javax.validation.constraints.Size;
+
 import java.time.Instant;
 import java.util.Set;
 

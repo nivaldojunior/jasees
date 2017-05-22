@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
@@ -8,27 +8,24 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { ProgressBarModule } from 'ngx-progress-bar';
 
 import { JaseesSharedModule } from '../../shared';
-
 import { ClipboardModule } from 'ngx-clipboard';
-
 import { SwiperModule } from 'angular2-useful-swiper';
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import {
-    ElectionCandidateElectComponent,
+    ElectionService,
+    ElectionPopupService,
     ElectionComponent,
-    ElectionDeleteDialogComponent,
-    ElectionDeletePopupComponent,
     ElectionDetailComponent,
     ElectionDialogComponent,
     ElectionPopupComponent,
+    ElectionDeletePopupComponent,
+    ElectionDeleteDialogComponent,
+    electionRoute,
     electionPopupRoute,
-    ElectionPopupService,
     ElectionResolvePagingParams,
     ElectionResultComponent,
-    electionRoute,
-    ElectionService
+    ElectionCandidateElectComponent
 } from './';
 
 const ENTITY_STATES = [

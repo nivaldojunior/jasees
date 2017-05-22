@@ -3,11 +3,14 @@ package br.com.jasees.config.dbmigrations;
 import br.com.jasees.domain.Authority;
 import br.com.jasees.domain.User;
 import br.com.jasees.security.AuthoritiesConstants;
+
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Creates the initial database setup

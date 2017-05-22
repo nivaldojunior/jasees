@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -175,11 +175,11 @@ public class ElectionResource {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "alreadyfalsevoted", "User already false voted"))
                 .body(null);
-        } else if (election.get().getInitDate().isAfter(ZonedDateTime.now())) {
+        } else if (election.get().getInitDate().isAfter(Instant.now())) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "electionnotstarted", "Election not started"))
                 .body(null);
-        } else if (election.get().getEndDate().isBefore(ZonedDateTime.now())) {
+        } else if (election.get().getEndDate().isBefore(Instant.now())) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "electionfinished", "Election is finished"))
                 .body(null);
@@ -204,7 +204,7 @@ public class ElectionResource {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "electioninvalid", "Election invalid"))
                 .body(null);
-        } else if (election.get().getEndDate().isAfter(ZonedDateTime.now())) {
+        } else if (election.get().getEndDate().isAfter(Instant.now())) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "electionnotfinished", "Election is not finished"))
                 .body(null);
@@ -231,7 +231,7 @@ public class ElectionResource {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "electioninvalid", "Election invalid"))
                 .body(null);
-        } else if (election.get().getEndDate().isAfter(ZonedDateTime.now())) {
+        } else if (election.get().getEndDate().isAfter(Instant.now())) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "electionnotfinished", "Election is not finished"))
                 .body(null);

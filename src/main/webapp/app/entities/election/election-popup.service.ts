@@ -4,6 +4,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { Election } from './election.model';
 import { ElectionService } from './election.service';
+import {ResponseWrapper} from '../../shared/model/response-wrapper.model';
 @Injectable()
 export class ElectionPopupService {
     private isOpen = false;
@@ -22,12 +23,12 @@ export class ElectionPopupService {
         this.isOpen = true;
 
         if (id) {
-            this.electionService.find(id).subscribe((election) => {
-                election.initDate = this.datePipe
-                    .transform(election.initDate, 'yyyy-MM-ddThh:mm');
-                election.endDate = this.datePipe
-                    .transform(election.endDate, 'yyyy-MM-ddThh:mm');
-                this.electionModalRef(component, election);
+            this.electionService.find(id).subscribe((res: ResponseWrapper) => {
+                res.json.initDate = this.datePipe
+                    .transform(res.json.initDate, 'yyyy-MM-ddThh:mm');
+                res.json.endDate = this.datePipe
+                    .transform(res.json.endDate, 'yyyy-MM-ddThh:mm');
+                this.electionModalRef(component, res.json);
             });
         } else {
             return this.electionModalRef(component, new Election());

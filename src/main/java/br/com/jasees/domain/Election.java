@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.*;
 
 /**
@@ -38,11 +38,11 @@ public class Election extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @Field("init_date")
-    private ZonedDateTime initDate;
+    private Instant initDate;
 
     @NotNull
     @Field("end_date")
-    private ZonedDateTime endDate;
+    private Instant endDate;
 
     @NotNull
     @Size(min = 2)
@@ -111,29 +111,29 @@ public class Election extends AbstractAuditingEntity implements Serializable {
         this.desc = desc;
     }
 
-    public ZonedDateTime getInitDate() {
+    public Instant getInitDate() {
         return initDate;
     }
 
-    public Election initDate(ZonedDateTime initDate) {
+    public Election initDate(Instant initDate) {
         this.initDate = initDate;
         return this;
     }
 
-    public void setInitDate(ZonedDateTime initDate) {
+    public void setInitDate(Instant initDate) {
         this.initDate = initDate;
     }
 
-    public ZonedDateTime getEndDate() {
+    public Instant getEndDate() {
         return endDate;
     }
 
-    public Election endDate(ZonedDateTime endDate) {
+    public Election endDate(Instant endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public void setEndDate(ZonedDateTime endDate) {
+    public void setEndDate(Instant endDate) {
         this.endDate = endDate;
     }
 
