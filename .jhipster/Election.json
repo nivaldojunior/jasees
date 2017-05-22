@@ -26,21 +26,21 @@
         },
         {
             "fieldName": "initDate",
-            "fieldType": "ZonedDateTime",
+            "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
             "fieldName": "endDate",
-            "fieldType": "ZonedDateTime",
+            "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"
             ]
         }
     ],
     "dto": "no",
-    "service": "no",
+    "service": "serviceClass",
     "entityTableName": "election",
     "pagination": "pagination"
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
 import { EventManager } from 'ng-jhipster';
 
 import { Election } from './election.model';
@@ -8,6 +7,7 @@ import { ElectionService } from './election.service';
 
 // ES6 Modules
 import { default as swal } from 'sweetalert2';
+import {ResponseWrapper} from '../../shared/model/response-wrapper.model';
 
 @Component({
     selector: 'jhi-election-result',
@@ -38,8 +38,8 @@ export class ElectionResultComponent implements OnInit, OnDestroy {
 
     load(id) {
         const self = this;
-        this.electionService.find(id).subscribe((election) => {
-            this.election = election;
+        this.electionService.find(id).subscribe((res: ResponseWrapper) => {
+            this.election = res.json;
         });
         this.electionService.results(id).subscribe((election) => {
             self.results = election;

@@ -1,15 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { EventManager } from 'ng-jhipster';
-
-import { Election } from './election.model';
-import { ElectionService } from './election.service';
-
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Election} from './election.model';
+import {ElectionService} from './election.service';
 // ES6 Modules
-import { default as swal } from 'sweetalert2';
-
-import * as $ from 'jquery';
+import {default as swal} from 'sweetalert2';
+import {ResponseWrapper} from '../../shared/model/response-wrapper.model';
 
 @Component({
     selector: 'jhi-election-candidate-elect',
@@ -17,6 +12,7 @@ import * as $ from 'jquery';
 
 })
 export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
+    alertService: any;
     election: Election;
     private subscription: any;
     candList: any[];
@@ -34,36 +30,32 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
         prevButton: '.swiper-button-prev'
     };
 
-    constructor(private eventManager: EventManager,
-                private electionService: ElectionService,
-                private route: ActivatedRoute,
-                private cdRef: ChangeDetectorRef) {
-    }
+    constructor(
+        private electionService: ElectionService,
+        private route: ActivatedRoute,
+    ) {}
 
     ngOnInit() {
-
         this.subscription = this.route.params.subscribe((params) => {
             this.load(params['id']);
         });
-
     }
 
     load(id) {
-
         this.electionService.find(id).subscribe(
-            (res: Response) => this.onSuccess(res.json(), res.headers),
-            (res: Response) => this.onError(res.json())
+            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
         );
     }
 
     private onSuccess(election, headers) {
         this.election = election;
         this.candList = this.election.candList;
-        this.isVoted = parseInt(headers.get('X-jaseesApp-params'));
+        this.isVoted = headers.get('X-jaseesApp-params');
     }
 
     private onError(error) {
-        /*this.alertService.error(error.message, null, null);*/
+        this.alertService.error(error.message, null, null);
     }
 
     candidateSelected(userSelected) {
@@ -86,7 +78,7 @@ export class ElectionCandidateElectComponent implements OnInit, OnDestroy {
                 const voteVM = {
                     'bias': self.isVoted === 0 ? true : false,
                     'candidate': userSelected.id
-                }
+                };
                 electionService.vote(electionId, voteVM).subscribe((result) => {
                     swal({
                         type: 'success',

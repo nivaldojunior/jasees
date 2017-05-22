@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { EventManager } from 'ng-jhipster';
+import {Component, OnInit} from '@angular/core';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {EventManager} from 'ng-jhipster';
 
-import { Account, LoginModalService, Principal } from '../shared';
+import {Account, LoginModalService, Principal} from '../shared';
 
-import { ActivatedRoute, Router } from '@angular/router';
-import { Response } from '@angular/http';
-import { ElectionService } from '../entities/election/election.service';
+import {Router} from '@angular/router';
+import {ElectionService} from '../entities/election/election.service';
+import {ResponseWrapper} from '../shared/model/response-wrapper.model';
 
 @Component({
     selector: 'jhi-home',
@@ -14,6 +14,7 @@ import { ElectionService } from '../entities/election/election.service';
     styleUrls: [
         'home.scss'
     ]
+
 })
 export class HomeComponent implements OnInit {
     account: Account;
@@ -22,7 +23,6 @@ export class HomeComponent implements OnInit {
     elections = [];
     bkpElections = [];
     filter: string;
-
     error: any;
     success: any;
     routeData: any;
@@ -36,14 +36,11 @@ export class HomeComponent implements OnInit {
     reverse: any;
 
     constructor(
-        private principal: Principal,
         private loginModalService: LoginModalService,
         private electionService: ElectionService,
-        private eventManager: EventManager,
         private router: Router
     ) {
         this.filter = '';
-
     }
 
     loadAll() {
@@ -51,8 +48,8 @@ export class HomeComponent implements OnInit {
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()}).subscribe(
-            (res: Response) => this.onSuccess(res.json(), res.headers),
-            (res: Response) => this.onError(res.json())
+            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
         );
     }
 
@@ -65,7 +62,7 @@ export class HomeComponent implements OnInit {
             for (let i = 0; i < this.bkpElections.length; i++) {
                 this.calculateTime(this.bkpElections[i]);
             }
-        }, 500);
+        }, 100);
     }
 
     private onError(error) {
@@ -73,24 +70,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.principal.identity().then((account) => {
-            this.account = account;
-        });
-        this.registerAuthenticationSuccess();
-
         this.loadAll();
-    }
-
-    registerAuthenticationSuccess() {
-        this.eventManager.subscribe('authenticationSuccess', (message) => {
-            this.principal.identity().then((account) => {
-                this.account = account;
-            });
-        });
-    }
-
-    isAuthenticated() {
-        return this.principal.isAuthenticated();
     }
 
     login() {

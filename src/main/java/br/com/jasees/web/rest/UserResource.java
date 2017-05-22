@@ -91,7 +91,7 @@ public class UserResource {
     @PostMapping("/users")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity createUser(@RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
+    public ResponseEntity createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserVM);
 
         if (managedUserVM.getId() != null) {
@@ -155,6 +155,16 @@ public class UserResource {
         final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * @return a string list of the all of the roles
+     */
+    @GetMapping("/users/authorities")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public List<String> getAuthorities() {
+        return userService.getAuthorities();
     }
 
     /**
