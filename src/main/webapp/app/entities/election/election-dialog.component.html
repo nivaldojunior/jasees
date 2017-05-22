@@ -94,9 +94,9 @@
         </div>
         <div class="form-group" class="slide-carousel">
             <br/>
-            <swiper *ngIf="users && users.length > 0" [config]="config" style="background: #eee; height: 150px" #usefulSwiper>
+            <swiper *ngIf="election.candList && election.candList.length > 0" [config]="config" style="background: #eee; height: 150px" #usefulSwiper>
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" *ngFor="let item of users">
+                    <div class="swiper-slide" *ngFor="let item of election.candList">
 
                     <img *ngIf="!item.imageUrl" src="../../../../resources/images/default-user.png" alt="First slide" width="150" height="150" (click)="candidateSelected(item)">
                       <img *ngIf="item.imageUrl" width="150" height="150" [src]="item.imageUrl" (click)="candidateSelected(item)">

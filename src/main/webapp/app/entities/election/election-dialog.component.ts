@@ -38,7 +38,6 @@ export class ElectionDialogComponent implements OnInit {
     election: Election;
     authorities: any[];
     private dataService: CompleterData;
-    users: any[];
     isSaving: boolean;
 
     config: Object = {
@@ -60,7 +59,6 @@ export class ElectionDialogComponent implements OnInit {
         private userService: UserService,
         private completerService: CompleterService) {
         this.dataService = completerService.local([], 'firstName', 'firstName');
-        this.users = [];
     }
 
     ngOnInit() {
@@ -115,24 +113,30 @@ export class ElectionDialogComponent implements OnInit {
     }
 
     onSelected(userSelected) {
+        if(!this.election.candList){
+            this.election.candList = []
+        }
         if (userSelected) {
             let bool = true;
-            for (let i = 0; i < this.users.length; i++) {
-                if (this.users[i].id === userSelected.originalObject.id) {
+            for (let i = 0; i < this.election.candList.length; i++) {
+                if (this.election.candList[i].id === userSelected.originalObject.id) {
                     bool = false;
                     break;
                 }
             }
             if (bool) {
-                this.users.push(userSelected.originalObject);
+                this.election.candList.push(userSelected.originalObject);
             }
         }
     }
 
     candidateSelected(userSelected) {
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].id === userSelected.id) {
-                this.users.splice(i, 1);
+        if(!this.election.candList){
+            this.election.candList = []
+        }
+        for (let i = 0; i < this.election.candList.length; i++) {
+            if (this.election.candList[i].id === userSelected.id) {
+                this.election.candList.splice(i, 1);
                 break;
             }
         }
