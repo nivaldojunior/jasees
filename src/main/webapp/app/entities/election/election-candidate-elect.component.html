@@ -5,7 +5,6 @@
 
     <h2><span class="description">{{election.desc}}</span></h2>
     <br/>
-    IsVoted: {{isVoted}}
 
     <swiper [config]="config" [ngClass]="{'swiper-border-true': isVoted == 0, 'swiper-border-false': isVoted == 1 }" style="background: #eee;" #usefulSwiper>
         <div class="swiper-wrapper" >
